@@ -1,2 +1,0 @@
-# qBlog
-day learn
