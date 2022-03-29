@@ -1,13 +1,13 @@
 # 原型与原型链
 
-## 什么是javaScript的原型？
+## 一、什么是javaScript的原型？
 
-在规范里，`prototype`被定义为给其它对象提供共享属性的对象，`prototype`描述的是两个对象之间的某种关系（其中一个，为另一个提供属性访问权限）。规范中明确描述了所有对象，都有一个隐式引用，它被称之为这个对象的 prototype 原型。
+在规范里，`prototype`被定义为给其它对象提供共享属性的对象，`prototype`描述的是两个对象之间的某种关系（其中一个，为另一个提供属性访问权限）。规范中明确描述了所有对象，都有一个隐式引用，它被称之为这个对象的 prototype 原型。JS 原型其实是一个隐式的单向链表
 
 ### 1. ECMAScript 规范说 prototype 应当是一个隐式引用，目前有两种访问规则
 
 1. 通过 Object.getPrototypeOf(obj) 间接访问指定对象的 prototype 对象，通过 Object.setPrototypeOf(obj, anotherObj) 间接设置指定对象的 prototype 对象。
-2. 部分浏览器提前开了 __proto__ 的口子，使得可以通过 obj.__proto__ 直接访问原型，通过 obj.__proto__ = anotherObj 直接设置原型。ECMAScript 2015 规范只好向事实低头，将 __proto__ 属性纳入了规范的一部分
+2. 部分浏览器提前开了 __proto__ 的口子，使得可以通过 obj.__proto__ 直接访问原型，通过 obj.__proto__ = anotherObj 直接设置原型。ECMAScript 2015 规范只好向事实低头，将 __proto__ 属性纳入了规范的一部分,__proto__ 属性既不能被 for in 遍历出来，也不能被 Object.keys(obj) 查找出来,访问对象的 obj.__proto__ 属性，默认走的是 Object.prototype 对象上 __proto__ 属性的 get/set 方法。
 
 ### 2. 手动实现一个__proto__属性(对象原型)
 
@@ -29,7 +29,99 @@ Object.defineProperty(Object.prototype, '__proto__', {
 })
 ```
 
-## 2. 函数的prototype属性
+## 二、什么是原型链？
+
+javascript的原型prototype只是恰好作为另一个对象的隐式引用的普通对象。那么，它也是对象，也符合一个对象的基本特征。也就是说，prototype 对象也有自己的隐式引用，有自己的 prototype 对象。如此，构成了对象的原型的原型的原型的链条，直到某个对象的隐式引用为 null，整个链条终止。这样的链条就叫做原型链。
+
+**原型链的实现方法：**
+
+```js
+const lookupProtptype  = (obj, objName) => {
+    let current = obj
+    if(current === null) {
+        throw new Error('error')
+    }
+
+    while(current) {
+        if(current.hasOwnProperty(objName)) {
+            return current[objName]
+        }
+        current = Object.getPrototypeOf(current)
+    }
+    return undefined
+}
+
+console.log('queal', lookupProtptype({}, 'toString') === Object.prototype.toString) // true
+```
+
+## 三、原型的继承方式
+
+原型具有两种继承方式：（这两种方式的主要区别在于是否由开发者亲自操作）
+
++ 显示继承
++ 隐式继承
+
+### 1. 显示继承
+
+1. 通过调用 **Object.setPrototypeOf** 方法，Object.setPrototypeOf(a, b): 将b设置成a的原型对象
+2. 通过 Object.create 方法，直接继承另一个对象
+
+**Object.setPropertyOf 和 Object.create 的差别在于：**
+
+1. Object.setPropertyOf，给我两个对象，我把其中一个设置为另一个的原型。
+
+2. Object.create，给我一个对象，它将作为我创建的新对象的原型。
+
+当我们已经拥有两个对象时，要构建原型关联，可以通过 Object.setPrototypeOf 来处理。
+
+当我们只有一个对象，想以它为原型，创建新对象，则通过 Object.create 来处理。
+
+### 2. 隐式继承
+
+隐式原型继承，是将 初始化, 原型挂载, 实例化 等多个步骤耦合到一起，可以让用户更少的操作来实现无感知的创建对象
+
+1. 对象字面量和数组字面量这样的语法糖的出现，完美的实现了隐式继承
+2. 函数在创建的过程中默认具有prototype属性，用户只需要指明构造函数初始化 + new操作符实例化即可，除非新增方法，否则不需要操作prototype
+
+#### 当我们使用对象字面量创建一个新对象时，它有两层隐式行为。
+
+1. 隐式的通过 new Object() 去创建对象
+
+2. 隐式的进行原型继承即具备constructor属性指向构造函数，并且具备__proto__属性指向Object.prototype
+
+当我们创建一个普通函数的时候
+
+1. 创建一个contructor函数迎来初始化
+2. 默认让每一个函数都具有一个prototype属性，默认指向Object.prototype
+3. 并且通过new操作符创建一个新的对象
+
+```js
+function User(firstName, lastName){
+    this.firstName = firstName
+    this.lastName = lastName
+}
+
+User.prototype = Object.create(Object.prototype)
+
+const user = new User()
+```
+#### 普通函数的隐式继承
+
+每一个函数在创建的过程中默认就都具备一个prototype属性，这个属性是一个对象，包含 constructor 一个字段，指向构造函数。这样用户通常只需要编写 constructor 函数，描述如何初始化对象的属性即可。除非他们需要新增方法，否则都不必操作 constructor 的 prototype 对象。
+
+```js
+function Test(){}
+
+Test.prototype === Test
+```
+
+constructor 是一个函数，而所有函数都是 new Function 创建出来的，函数字面量可以看作是它的语法糖。也就是说，函数也是对象，也有自己的隐式引用（原型）。但函数的 prototype 属性，却不是该函数对象的原型。而是基于隐式原型继承规则，作为原型，挂载到 new F() 创建出来的新对象内部。
+
+所以 `Test()` 只具备prototype属性，该属性是一个对象即 `{ constructor: Test }`
+
+而 `new` 操作符实例化的对象是具有 `__proto__` 属性的， 指向 `test.prototype`
+ 
+## 四、详细解释函数的prototype属性
 
 > 所有函数都有的```prototype```属性，js中函数也属于对象的一个子类型，所以函数也具有```__proto__```与普通对象类似都指向其原型
 > 而这里的```prototype```属性是函数特有的
@@ -55,7 +147,7 @@ console.log(Parent.prototype.__proto__ === Object.prototype)
   
 这里要先弄清楚其中的区别，以便接下来的讲解
 
-## 3. 各类方法与属性的统称
+## 五、原型链之间的关系 & 各类方法与属性的统称
 
 > 构造函数当中定义的方法叫做```静态方法```，构造函数当中定义的属性叫做```静态属性```
 > 在原型当中定义的方法叫做```原型方法```，在原型当中定义的属性叫做```原型属性```
@@ -129,16 +221,70 @@ C.__proto__.constructor === Function
 ![原型-3](./prototype-3.png)
 
 
-## 面试题：
+## 六、面试题：
 
-1. 为什么 typeof 判断 null 是 Object 类型？
+1. 谈谈你对 JS 原型和原型链的理解？
+
+JS 原型是指为其它对象提供共享属性访问的对象。在创建对象时，每个对象都包含一个隐式引用指向它的原型对象或者 null。
+
+原型也是对象，因此它也有自己的原型。这样构成一个原型链。
+
+2. 原型链有什么作用？
+
+在访问一个对象的属性时，实际上是在查询原型链。这个对象是原型链的第一个元素，先检查它是否包含属性名，如果包含则返回属性值，否则检查原型链上的第二个元素，以此类推。
+
+3. 那如何实现原型继承呢？
+   
+有两种方式。一种是通过 Object.create 或者 Object.setPrototypeOf 显式继承另一个对象，将它设置为原型。
+
+另一种是通过 constructor 构造函数，在使用 new 关键字实例化时，会自动继承 constructor 的 prototype 对象，作为实例的原型。
+
+在 ES2015 中提供了 class 的风格，背后跟 constructor 工作方式一样，写起来更内聚一些。
+
+4. ConstructorB 如何继承 ConstructorA ？
+
+JS 里的继承，是对象跟对象之间的继承。constructor 的主要用途是初始化对象的属性。
+
+因此，两个 Constructor 之间的继承，需要分开两个步骤。
+
+第一步是，编写新的 constructor，将两个 constructor 通过 call/apply 的方式，合并它们的属性初始化。按照超类优先的顺序进行。
+
+第二步是，取出超类和子类的原型对象，通过 Object.create/Object.setPrototypeOf 显式原型继承的方式，设置子类的原型为超类原型。
+
+整个过程手动编写起来比较繁琐，因此建议通过 ES2015 提供的 class 和 extends 关键字去完成继承，它们内置了上述两个步骤。
+
+5. 看起来你挺了解原型，你能说一个原型里比较少人知道的特性吗？
+   
+在 ES3 时代，只有访问属性的 get 操作能触发对原型链的查找。在 ES5 时代，新增了 accessor property 访问器属性的概念。它可以定义属性的 getter/setter 操作。
+
+具有访问器属性 setter 操作的对象，作为另一个对象的原型的时候，设置属性的 set 操作，也能触发对原型链的查找。
+
+普通对象的 __proto__ 属性，其实就是在原型链查找出来的，它定义在 Object.prototype 对象上。
+
+6. 为什么 typeof 判断 null 是 Object 类型？
 
 因为Object.prototype指向null，而javaScript的原型描述的是两个对象之间的某种关系（其中一个，为另一个提供属性访问权限），所以这是对象和对象之间的关系，所以typeof 判断 null 是 Object 类型
 
-2. Function 和 Object 是什么关系？
+7. Function 和 Object 是什么关系？
+
+JavaScript 中的 Object 和 Function 就是典型的函数对象。
+
+8. new 关键字具体做了什么？手写实现。
+
+
+
    
-3. new 关键字具体做了什么？手写实现。
-4. prototype 和__proto__是什么关系？什么情况下相等？
-5. ES5 实现继承有几种方式，优缺点是啥
-6. ES6 如何实现一个类
-7. ES6 extends 关键字实现原理是什么
+   
+9.  
+10. prototype 和__proto__是什么关系？什么情况下相等？
+11. ES5 实现继承有几种方式，优缺点是啥
+12. ES6 如何实现一个类
+13. ES6 extends 关键字实现原理是什么
+14. prototype存在的缺点
+
++ 1. 隐式属性访问让程序更不可靠，也容易带来困惑
++ 2. 不利于体积优化
++ 3. 不利于代码复用
+
+
+![](https://mp.weixin.qq.com/s/1UDILezroK5wrcK-Z5bHOg)
