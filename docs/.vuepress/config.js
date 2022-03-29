@@ -30,7 +30,8 @@ module.exports = {
           title: 'JavaScript',
           collapable: true,
           children: [
-            { title: 'js执行上下文&作用域', path: '/javaScript/执行上下文/executionContext' },
+            { title: 'js执行上下文&作用域', path: '/javaScript/执行上下文和作用域/executionContext' },
+            { title: '闭包', path: '/javaScript/闭包/base' },
             { title: '原型链', path: '/javaScript/原型链/base' },
           ],
         }
