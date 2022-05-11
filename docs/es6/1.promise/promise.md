@@ -28,9 +28,9 @@ console.log(2) // 输出顺序：1, 2
 1. 由于promise是存在3种状态的，所以定义三个常量用来标记promise的状态
 
 ```js
-const PENDING = 'pending'
-const REJECT = 'reject'
-const FULFILLED = 'fulfilled'
+const PENDING = "PENDING";
+const SUCCESS = "FULFILLED";
+const FAIL = "REJECTED";
 ```
 
 2. 创建promise的方式是使用`const promise = new Promise((resolve, reject) => {})`由此可见:

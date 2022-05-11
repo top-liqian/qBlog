@@ -1,0 +1,28 @@
+# 模块化
+
+## 为什么又模块化？
+
+方便维护，高内聚低耦合，变量冲突问题
+
+js实现模块化可以采用函数来进行分割，node当中也是采用函数来进行模块划分
+
+cmd(sea.js)
+amd(require)
+umd(支持cmd、umd)
+iife(自执行函数)
+commonjs(require module.exports)
+es6(import export)
+
+目前前端主要是采用ES6Module、后段主要采用commonjs
+
+## commonjs规范
+
++ 每个js文件都是一个模块
++ 每一个模块想去引用别人的模块都需要采用require语法
++ 每一个模块想被别人使用需要采用module.exports导出
+
+## 内置模块
+
+与生俱来的
+
+## 文件模块

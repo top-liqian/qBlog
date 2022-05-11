@@ -3,7 +3,7 @@ const path = require('path')
 
 function* read () {
    const name = yield fs.readFile(path.resolve(__dirname, 'name.txt'), 'utf8')
-   const age = yield fs.readFile(path.resolve(__dirname, data), 'utf8')
+   const age = yield fs.readFile(path.resolve(__dirname, name), 'utf8')
    return age
 }
 

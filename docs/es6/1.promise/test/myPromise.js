@@ -30,8 +30,38 @@ class Promsie {
             reject(error)
         }
     }
-    then() {
-        if(this)
+    then(onFulfilled, onRejected) {
+        let promise2
+        promise2 = new Promise((resolve, reject) => {
+            if(this.state === FULLFILLED) {
+                setTimeout(() => {
+                    try {
+                        let x = onFulfilled(this.value)
+                        resolvePromise(promise2, x, resolve, reject)
+                    } catch (error) {
+                        reject(error)
+                    }
+
+                })
+            }
+            if(this.state === REJECTED) {
+                setTimeout(() => {
+                    try {
+                        let x = onRejected(this.reason)
+                        resolvePromise(promise2, x, resolve, reject)
+                    } catch (error) {
+                        reject(error)
+                    }
+
+                })
+    
+            }
+            if(this.state === PENDING) {
+    
+            }
+
+        })
+        return promise2
     }
 
 }
