@@ -12,6 +12,40 @@ h函数直接重载，不同的参数决定了不同的功能
 4. 元素 儿子/ 元素（只要不是文本节点，都会把儿子转换成数组）
 5. 元素 空属性 多个儿子
 
+### h函数的实现原理
+
+h函数为了更多的扩展性，它的参数是不固定的，主要是分为2个、3个、以及3个以上的情况
+
++ 
+
+```js
+export function h(type, propsOrChildren?, children?) {
+    const l = arguments.length;
+    // 如果参数为两个的时候分为两种情况
+    // 1. 元素 + 属性 2. 元素 + 儿子
+    if (l === 2) { 
+        // 如果propsOrChildren是对象的时候，可能是属性，可能是儿子节点
+        // 只有属性，或者一个元素儿子的时候
+        if (isObject(propsOrChildren) && !Array.isArray(propsOrChildren)) {
+            if (isVNode(propsOrChildren)) { // h('div',h('span'))
+                return createVNode(type, null, [propsOrChildren])
+            }
+            return createVNode(type, propsOrChildren);  // h('div',{style:{color:'red'}});
+        } else { // 传递儿子列表的情况
+            return createVNode(type, null, propsOrChildren); // h('div',null,[h('span'),h('span')])
+        }
+    }else{
+        if(l > 3){ // 超过3个除了前两个都是儿子
+            children = Array.prototype.slice.call(arguments,2);
+        } else if( l === 3 && isVNode(children)){ // 正常传递值的情况
+            children = [children]; // 儿子是元素将其包装成 h('div',null,[h('span')])
+        }
+        return createVNode(type,propsOrChildren,children) // h('div',null,'jw')
+    }
+}
+// 注意子节点是：数组、文本、null
+```
+
 ## createVNode
 
 h函数内部本质上是调用了createVNode方法
