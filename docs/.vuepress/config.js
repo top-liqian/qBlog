@@ -13,7 +13,9 @@ module.exports = {
   themeConfig: {
     logo: '/home.png',
     nav: [
+      { text: 'Css', link: '/css/' },
       { text: 'JavaScript', link: '/javaScript/' },
+      { text: '安装', link: '/install/' },
       {
         text: 'Languages',
         items: [
@@ -25,6 +27,17 @@ module.exports = {
     ],
     sidebarDepth: 2,
     sidebar: {
+      '/css/': [
+        {
+          title: 'CSS',
+          collapable: true,
+          children: [
+            { title: '元素居中', path: '/css/元素居中/base' },
+            { title: '清除浮动', path: '/css/清除浮动/base' },
+            { title: '布局', path: '/css/布局/mobile-terminal' },
+          ],
+        }
+      ],
       '/javaScript/': [
         {
           title: 'JavaScript',
@@ -36,6 +49,15 @@ module.exports = {
           ],
         }
       ],
+      '/install/': [
+        {
+          title: '安装',
+          collapable: true,
+          children: [
+            { title: 'node安装', path: '/install/node-install' },
+          ],
+        }
+      ]
     }
   }
 }
