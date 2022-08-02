@@ -1,6 +1,8 @@
 # 手写一个简单版本的vue3遇见的问题
 
 1. proxy为什么要搭配 Reflect 一起使用？
+   
+
 2. 解决 reactive(obj) !== reactive(obj)的问题
 
 使用缓存策略
