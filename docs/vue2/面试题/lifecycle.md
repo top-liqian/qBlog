@@ -120,3 +120,24 @@ props -> methods -> data -> computed -> watch
 ## 八、vue模版当中的优先级？
 
 render > template > el
+
+## 九、vue 中怎么重置 data并且原理是什么？
+
+使用`Object.assgin(this.$data, this.$option.data())`
+
+原理：
+
+这个方法就是一个简单的对象合并的方法，`this.$options.data()`就是在组件内部书写的 `data` 函数，执行这个函数就会返回一份初始的 data 数据
+
+vue在初始化的时候执行了一个叫做 `initState` 的方法，里面又执行了 `initData` 来初始化数据
+
+```js
+function initData() {
+    let data = vm.$options.data;
+    data = vm._data = typeof data === "function" ? getData(data, vm) : data || {};
+    while (i--) {
+        !isReserved(key) && proxy(vm, `_data`, key);
+    }
+}
+```
+这个方法在最开始执行了 `data` 函数，然后又把返回值赋值给了 `vm._data`，在函数的最后又执行了 `proxy(vm, _data, key)`，在proxy方法当中通过 `Object.defineProperty `执行了一层代理，这样我们在组件内部访问一个属性时，比如 `this.name` 其实访问的是 `this._data.name`, Vue 构造函数初始化的过程 `stateMixin` 方法定义了一个 `dataDef`，`dataDef` 的 `get` 方法返回 `_data`，又通过 `Object.defineProperty` 将 `$data` 指向了 `dataDef`，这样我们访问 `$data` 的时候其实访问的是 `_data`，而 `_data` 里保存的就是最终的 `data` 数据，所以我们才可以使用 `Object.assign(this.$data, this.$options.data())` 来达到重置数据的目的。

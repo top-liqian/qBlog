@@ -93,4 +93,6 @@ Vue 中的 scoped 属性的效果主要通过 PostCSS 转译实现
 ## 九、怎么给 vue 定义全局的方法？
 
 1. 将方法挂载到Vue.prototype上面
-2. 
+
+
+## 十、
