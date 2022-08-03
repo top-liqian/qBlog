@@ -1,3 +1,5 @@
+# computed相关面试题
+
 ## 1. computed 什么时候初始化
 
 在`vue`创建实例的时候会初始化各种选项，其中initState方法中会初始化`props、methods、data、computed、以及watch`，其中`initComputed`就是初始化`computed`
@@ -48,3 +50,10 @@ computed 计算完毕，释放Dep.target，并且Dep.target 恢复上一个watch
   
 + 当我们需要在数据变化时执行异步或开销较大的操作时，应该使用 watch，使用 watch 选项允许我们执行异步操作 ( 访问一个 API )，限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这些都是计算属性无法做到的。
 
+## 6. 在使用计算属性时，函数名和 data 数据源中的数据可以同名吗？
+
+不可以重名，不仅仅是计算属性和 data，其他的如 props，methods 都不可以重名，因为 Vue 会把这些属性挂载在组件实例上，直接使用 this 就可以访问，如果重名就会导致冲突。
+
+在组件初始化的时候会执行 `_init` 函数, 这里面执行了一个 `initState` 的方法，这里初始化了很多数据，有 `props，methods，data，computed，watch` 这几个,在这个`initComputed`方法内部，做了一个判断，会去查你定义的 `computed` 的 key 值在 `data `和 `props` 中有没有存在，这个时候 props 和 data 都已经初始化完成了，且已经挂载到了组件实例上，你的 `computed` 如果有冲突的话就会报错了，其实这几个初始化数据的方法内部都有做这些检测。
+
+## 7. 

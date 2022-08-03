@@ -83,3 +83,7 @@ key 是为 Vue 中 vnode 的唯一标记，通过这个 key，我们的 diff 操
 
 
 ## 七、实现一个v-lazy自定义插件
+
+## 八、vue.js中标签如何绑定事件
+
+v-on/@语法糖

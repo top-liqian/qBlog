@@ -64,3 +64,8 @@ window.history.replaceState(null, null, path);
   
 + history.pushState() 或 history.replaceState() 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）。
 
+## 三、在vue项目中如何获取页面的hash变化？
+
+1.`window.onhashchange` 监听hash事件 
+
+2. 通过 `watch:{ $route:{ handler(newVal,oldVal){ }, deep:true } }`

@@ -112,3 +112,11 @@ new Vue({
     }
 })
 ```
+
+## 七、在初始化状态的时候vue实例上面的方法按照什么样的顺序加载
+
+props -> methods -> data -> computed -> watch
+
+## 八、vue模版当中的优先级？
+
+render > template > el
