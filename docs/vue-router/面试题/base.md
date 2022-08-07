@@ -69,3 +69,97 @@ window.history.replaceState(null, null, path);
 1.`window.onhashchange` 监听hash事件 
 
 2. 通过 `watch:{ $route:{ handler(newVal,oldVal){ }, deep:true } }`
+
+## 四、什么是前端路由？
+
+前端路由是在保证只有一个HTML页面的情况下，通过对每个视图展示形式匹配一个特殊的url来实现所谓的切换效果。不会重新向服务端发送请求，也不会跳转页面。无论是刷新、前进、还是后退，都可以通过特殊url实现。
+
+## 五、vue-router 路由钩子函数是什么？执行顺序是什么？
+
+钩子函数包括：全局守卫、路由守卫、组件守卫
+
++ 全局前置/钩子函数：beforeEach、beforeResolve、afterEach
++ 路由独享守卫：beforeEnter
++ 组件守卫：beforeRouteEnter、 beforeRouteUpdate、 beforeRouteLeave
+
+完整导航流程：
+
+1. 导航被触发
+2. 在失活的组件里面调用 beforeRouteLeave 守卫
+3. 调用全局的 beforeEach 守卫
+4. 在重用的组件内部调用 beforeRouteUpdate 守卫（2.2+）
+5. 在路由配置中调用 beforeEnter
+6. 解析异步组件路由
+7. 在被激活的组件内部调用 beforeRouteEnter
+8. 调用全局的 beforeResolve守卫（2.5+）
+9. 导航被确认
+10. 调用全局的afterEach钩子
+11. 触发DOM更新
+12. 调用 beforeRouteEter 守卫中传给next的回调函数，创建好的组件实例会作为回调函数的参数传入
+
+## 六、vue-router 动态路由是什么？有什么问题？
+
+假如我们有一个组件，针对不同的id接口返回的数据是不一样的，但是都要使用这个组件进行渲染，那么我们就可以在vue-router的路由路径中使用动态路径参数的形式来达到这个效果，其中有两种方式
+
+1. params方式
+
++ 路由定义： 
+  - 在App.vue当中 <router-link :to="`/user/${userId}`" replace>用户</router-link>
+  - 在index.js当中  { path: '/user/:userId', component: User}
+
++ 路由跳转
+  - <router-link :to="{name: 'Users', params: { userId: 123}}"></router-link>
+  -  this.$router.push({name: 'Users', params: { userId: 123} })
+  -  this.$router.push('/user/' + 123)
++ 参数获取 this.$route.params
+
+2. query方式
+
++ 路由定义
+  - <router-link :to="{ path: '', query: { }}"></router-link>
+  - 点击事件 this.$router.push({ path: '', query: {}})
++ 跳转方法
+  - <router-link> to name
+  - <router-link> to path
+  - this.$router.push name
+  - this.$router.push path
+  - this.$router.push('/user?userId' + id)
++ 参数获取 this.$route.query
+
+### params方式和query方式的区别
+
++ query方式 name、path都可以使用 params方式 只能用name
++ query更加类似ajax当中的get穿参数、params更类似于post，query在浏览器地址栏当中显示参数，params不显示
++ query刷新不会丢失query里面的数据、params刷新会丢失params的数据
+
+## 七、$route和$router的区别?
+
++ $router为VueRouter实例，想要导航到不同URL，则使用$router.push方法
+
++ $route为当前router跳转对象，里面可以获取name、path、query、params等
+
+## 八、Vue-Router 的懒加载如何实现
+
+把不同路由对应的组件分割成不同的代码块，然后当路由被访问的时候才加载对应组件
+
+```js
+const List = () => import('./index.vue')
+```
+
+原理：
+
+## 九、编程式路由导航 与 声明式路由导航
+
+1. 编程式路由导航： 即写 js 的方式
+   
+   + this.$router.push: 相当于点击路由链接(可以返回到当前路由界面）队列的方式（先进先出）
+   + this.$router.replace：用新路由替换当前路由(不可以返回到当前路由界面) --> 栈的方式（先进后出）
+   + this.$router.back():请求(返回)上一个记录路由
+   + this.$router.go(-1):请求(返回)上一个记录路由
+   + this.$router.go(1): 请求下一个记录路由
+2. 声明式路由导航： 即 <router-link>
+
+```html
+<router-link to='xxx' tag='li'>  To PageB  </router-link>
+```   
+<router-link> 会默认解析成 a 标签，可以通过 tag 属性指定它解析成什么标签
