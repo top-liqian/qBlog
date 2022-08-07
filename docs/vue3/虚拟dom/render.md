@@ -1,0 +1,13 @@
+# render函数
+
+调用redner函数的本质其实是操作createRenderer函数
+
+# createRenderer函数
+
+用户可以调用此方法传入对应的渲染选项
+
+返回的是一个render函数，接受一个用户自定义的options作为参数，此options就是用户自己渲染的时候可以决定有哪些方法
+
+options内部的函数
+
+返回的render函数我们需要将vnode渲染到container中，并且调用options中的api
