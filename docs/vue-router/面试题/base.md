@@ -44,10 +44,17 @@ switch (mode) {
 可以通过 a 标签，并设置 href 属性，当用户点击这个标签后，URL 的 hash 值会发生改变；或者使用  JavaScript 来对 loaction.hash 进行赋值，改变 URL 的 hash 值；
 
 + 我们可以使用 hashchange 事件来监听 hash 值的变化，从而对页面进行跳转（渲染）。
+  
+```js
+window.addEventListener("hashchange", () => {
+  // 把改变后的url地址栏的url赋值给data的响应式数据current，调用router-view去加载对应的页面
+  this.data.current = window.location.hash.substr(1);
+});
+```
 
 2. history的实现原理
 
-HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：**history.pushState() 和 history.repalceState()**。这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，**pushState**是新增一个历史记录，**repalceState**是直接替换当前的历史记录，如下所示：
+HTML5 提供了 History API 来实现 URL 的变化。其中做最主要的 API 有以下两个：**history.pushState() 和 history.repalceState()**, 需要特定浏览器去支持，这两个 API 可以在不进行刷新的情况下，操作浏览器的历史纪录。唯一不同的是，**pushState**是新增一个历史记录，**repalceState**是直接替换当前的历史记录，如下所示：
 
 ```js
 
@@ -56,16 +63,38 @@ window.history.replaceState(null, null, path);
 
 ```
 
+不过这种模式还需要后台配置支持。因为我们的应用是个单页客户端应用，如果后台没有正确的配置，就需要前端自己配置 404 页面。
+
 路由模式的实现主要基于存在下面几个特性：
 
 + pushState 和 repalceState 两个 API 来操作实现 URL 的变化 ；
   
 + 我们可以使用 popstate  事件来监听 url 的变化，从而对页面进行跳转（渲染）；
   
-+ history.pushState() 或 history.replaceState() 不会触发 popstate 事件，这时我们需要手动触发页面跳转（渲染）。
++ history.pushState() 或 history.replaceState() 不会触发 popstate 事件，浏览器不会向后端发送请求，这时我们需要手动触发页面跳转（渲染）。popstate 事件的执行是在点击浏览器的前进后退按钮的时候，才会被触发
+
+上面两个方法应用于浏览器的历史记录栈，在当前已有的 back()、forward()、go()方法的基础之上，这两个方法提供了对历史记录进行修改的功能，当这两个方法执行修改时，只能改变当前地址栏的 url，但浏览器不会向后端发送请求，也不会触法 popstate 事件的执行。
 
 ## 三、在vue项目中如何获取页面的hash变化？
 
-1.`window.onhashchange` 监听hash事件 
+1.`window.onhashchange` 监听hash事件 `window.addEventListener('hashChange', () => {})`
 
 2. 通过 `watch:{ $route:{ handler(newVal,oldVal){ }, deep:true } }`
+
+## 四、hash和history的区别
+
+| 差异点| hash | history |
+| -------- | ---------------------------- | ----------------- | 
+| url 显示 | 有#，很 low | 无#，好看 | 
+| 回车刷新 | 可以加载到 hash 值对应页面 | 一般情况 404 掉了 | 
+| 支持版本 | 支持低版本浏览器和 IE 浏览器 | HTML5 新出的 API |
+
++ 一般场景下，hash 和 history 都可以，除非你更在意颜值，# 符号夹杂在 URL 里看起来确实有些不太美。如果不想要很丑的 hash，我们可以用路由的 history 模式，这种模式充分利用 history.pushState API 来完成 URL 跳转而无须重新加载页面。
+
++ Vue-router 另外，根据 Mozilla Develop Network 的介绍，调用 history.pushState() 相比于直接修改 hash，存在以下优势:
+
+  - pushState() 设置的新 URL 可以是与当前 URL 同源的任意 URL；而 hash 只可修改 # 后面的部分，因此只能设置与当前 URL 同文档的 URL pushState() 设置的新 URL 可以与当前 URL 一模一样，这样也会把记录添加到栈中；而 hash 设置的新值必须与原来不一样才会触发动作将记录添加到栈中
+
+  - pushState() 通过 stateObject 参数可以添加任意类型的数据到记录中；而 hash 只可添加短字符串
+
+  - pushState() 可额外设置 title 属性供后续使用
