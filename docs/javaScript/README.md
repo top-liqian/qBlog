@@ -1,22 +1,24 @@
 # JavaScript-ES5
 
-- [js执行上下文&作用域](./javaScript/执行上下文和作用域/executionContext.md)
+- [变量](./1.变量/variable.md)
+- [类型转换](./2.类型转换/base.md)
+- [操作符 - new](./3.操作符/1.new.md)
+- [操作符 - typeof](./3.操作符/2.typeof.md)
+- [操作符 - instanceof](./3.操作符/3.instanceof.md)
+- [操作符 - constructor](./3.操作符/4.constructor.md)
+- [操作符 - indexOf](./3.操作符/5.indexOf.md)
+- [操作符 - 全相等](./3.操作符/6.===.md)
+- [操作符 - Object.is](./3.操作符/7.Object.is.md)
+- [js执行上下文&作用域](./4.执行上下文和作用域/base.md)
+
+
+
 - [闭包](./javaScript/闭包/base.md)
 - [原型与原型链](./javaScript/原型链/base.md)
 
-
-
-
-
 - [面向对象编程](./javaScript/oop/oop.md)
 - [浏览器事件模型](./javaScript/internet/internet.md)
-- [变量](./javaScript/variable/variable.md)
-- [类型转换](./javaScript/type-change/type-change.md)
 
-- [new操作符](./javaScript/operator/new/new.md)
-- [typeof操作符](./javaScript/operator/typeof.md)
-- [instanceof操作符](./javaScript/operator/instanceof.md)
-- [indexOf操作符](./javaScript/operator/indexOf.md)
 - [继承](./javaScript/inherit/inherit.md)
 
 
