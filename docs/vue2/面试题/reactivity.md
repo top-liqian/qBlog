@@ -33,7 +33,7 @@ render();
 state.push(4)
 ```
 
-## 二、请说一下响应式数据的理解？
+## 二、请说一下响应式数据的理解？（Vue的响应式原理）
 
 在vue2当中，对象内部通过defineReactive方法，使用Object.defineProperty将属性进行劫持（只会劫持已经存在的属性），多层对象是通过递归来实现劫持，数组则是通过重写数组方法来实现。内部依赖收集是由于每个属性都拥有自己的dep属性，存放他所依赖的watcher，当属性变化后会通知自己对应的watcher去更新，所以如果对象层级过深，性能就会差；
 在实际的使用过程中不需要响应数据的内容不要放到data中，也可以使用Object.freeze() 去冻结数据
@@ -150,3 +150,6 @@ Vue 主要通过以下 4 个步骤来实现数据双向绑定的：
 
 2. 如果目标是对象，会先判读属性是否存在、对象是否是响应式，最终如果要对属性进行响应式处理，则是通过调用   defineReactive 方法进行响应式处理（ defineReactive 方法就是  Vue 在初始化对象时，给对象属性采用 Object.defineProperty 动态添加 getter 和 setter 的功能所调用的方法）
 
+## 九、手写实现vm.$set
+
+## 十、手写EventEmitter，实现on/emit/off方法。

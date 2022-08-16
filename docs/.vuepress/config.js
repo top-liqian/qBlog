@@ -53,6 +53,10 @@ module.exports = {
             { title: '操作符 - 全相等', path: '/javaScript/3.操作符/6.===' },
             { title: '操作符 - Object.is', path: '/javaScript/3.操作符/7.Object.is' },
             { title: 'js执行上下文&作用域', path: '/javaScript/4.执行上下文和作用域/base' },
+            { title: '原型与原型链', path: '/javaScript/5.原型链/base' },
+            { title: '继承', path: '/javaScript/6.继承/inherit' },
+            { title: '闭包', path: '/javaScript/7.闭包/base' },
+            { title: 'this', path: '/javaScript/8.this指向/base' },
           ],
         }
       ],
