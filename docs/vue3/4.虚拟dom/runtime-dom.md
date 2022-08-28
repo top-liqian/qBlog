@@ -55,6 +55,9 @@ render(h('h1', 'hello world!', app))
 
 ```js
 function patchStyle(el, prev, next) { // 更新style
+    // 兼容没有数据的情况不报错
+    if (prev == null) prev = {}
+    if(next == null) next = {}
     const style = el.style;
     for (const key in next) { // 用最新的直接覆盖
         style[key] = next[key]
