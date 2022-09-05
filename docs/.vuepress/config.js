@@ -16,6 +16,7 @@ module.exports = {
       { text: 'Css', link: '/css/' },
       { text: 'JavaScript', link: '/javaScript/' },
       { text: '安装', link: '/install/' },
+      { text: '前端工程化', link: '/工程化/' },
       {
         text: 'Languages',
         items: [
@@ -40,7 +41,7 @@ module.exports = {
       ],
       '/javaScript/': [
         {
-          title: 'JavaScript',
+          title: 'ES5',
           collapable: true,
           children: [
             { title: '变量', path: '/javaScript/1.变量/variable' },
@@ -58,6 +59,13 @@ module.exports = {
             { title: '闭包', path: '/javaScript/7.闭包/base' },
             { title: 'this', path: '/javaScript/8.this指向/base' },
           ],
+        },
+        {
+          title: 'ES6',
+          collapable: true,
+          children: [
+            { title: '变量', path: '/javaScript/1.变量/variable' },
+          ]
         }
       ],
       '/install/': [
@@ -68,6 +76,29 @@ module.exports = {
             { title: 'node安装', path: '/install/node-install' },
           ],
         }
+      ],
+      '/工程化/':[
+        {
+          title: 'git',
+          collapable: true,
+          children: [
+            { title: 'git', path: '/工程化/git/base.md' },
+          ],
+        },
+        {
+          title: 'npm',
+          collapable: true,
+          children: [
+            { title: 'install原理', path: '/工程化/npm/install原理.md' },
+          ],
+        },
+        {
+          title: 'pnpm',
+          collapable: true,
+          children: [
+            { title: 'pnpm简介', path: '/工程化/pnpm/pnpm.md' },
+          ],
+        },
       ]
     }
   }
