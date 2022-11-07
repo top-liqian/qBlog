@@ -1,4 +1,4 @@
-# computed相关面试题
+# computed以及watch相关面试题
 
 ## 1. computed 什么时候初始化
 
@@ -56,4 +56,6 @@ computed 计算完毕，释放Dep.target，并且Dep.target 恢复上一个watch
 
 在组件初始化的时候会执行 `_init` 函数, 这里面执行了一个 `initState` 的方法，这里初始化了很多数据，有 `props，methods，data，computed，watch` 这几个,在这个`initComputed`方法内部，做了一个判断，会去查你定义的 `computed` 的 key 值在 `data `和 `props` 中有没有存在，这个时候 props 和 data 都已经初始化完成了，且已经挂载到了组件实例上，你的 `computed` 如果有冲突的话就会报错了，其实这几个初始化数据的方法内部都有做这些检测。
 
-## 7. 
+## 7. watch的原理
+
+watch用于监控用户的data变化，数据变化后会触发对应的watch的回调方法,vue当中的watch属性本质上其实调用的是vue暴露在实例上面的`$watch`方法，`$watch`内部就是创建一个`watcher`的过程，如果用户传进来的还有一些特殊的操作做一些特殊的处理（如`immediate`立刻执行回调函数），然后借助vue响应式原理，默认在取值时会将这个旧值保存下来，然后将watcher存放到对应属性的dep中，当数据发生变化时通知对应`的watcher`重新执行`getter`函数拿到用户返回的结果作为旧值，然后执行用户传进来的回调函数，将新旧值作为参数
