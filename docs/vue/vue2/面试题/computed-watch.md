@@ -6,7 +6,7 @@
 
 ## 2. computed 的缓存是怎么做的
 
-通过控制`watcher`实例对象的`dirty`属性做到的，`dirty`属性默认值是`false`，`computed`将 `lazy` 赋值给 `dirty`，就是给一个初始值，让`watcher`控制缓存的任务开始，如果 `computed` 依赖的数据变化，`dirty` 会变成`true`，调用 `evalute` 重新计算，然后更新缓存值 `watcher.value`。
+computed本身就是一个计算属性类型的watcher，通过控制`watcher`实例对象的`dirty`属性做到的，`dirty`属性默认值是`false`，`computed`将 `lazy` 赋值给 `dirty`，就是给一个初始值，让`watcher`控制缓存的任务开始，如果 `computed` 依赖的数据变化，`dirty` 会变成`true`，调用 `evalute` 重新计算，然后更新缓存值 `watcher.value`。
 
 如果computed的数据`A`调用了data的数据`B`，即`A依赖B`，那么就会`B`会收集到`A`的`watcher`，当`B`发生改变了，就会通知`A`进行更新，即调用 `A-watcher.update`，当通知 `computed` 更新的时候，就只是把 `dirty` 设置为 `true`，从而读取 `comptued` 时，便会调用 `evalute` 重新计算。
 
