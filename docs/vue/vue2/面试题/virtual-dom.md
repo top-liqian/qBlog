@@ -23,3 +23,7 @@ Virtual DOM 是 DOM 节点在 JavaScript 中的一种抽象数据结构，之所
 2. diff 算法 — 比较两棵虚拟 DOM 树的差异；
    
 3. pach 算法 — 将两个虚拟 DOM 对象的差异应用到真正的 DOM 树
+
+## 三、vue 和 react 在虚拟dom的diff上，做了哪些改进使得速度很快?
+
+vue2的虚拟dom的diff：

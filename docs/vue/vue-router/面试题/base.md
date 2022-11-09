@@ -190,3 +190,5 @@ const List = () => import('./index.vue')
 <router-link to='xxx' tag='li'>  To PageB  </router-link>
 ```   
 <router-link> 会默认解析成 a 标签，可以通过 tag 属性指定它解析成什么标签
+
+## 前端History路由配置 nginx

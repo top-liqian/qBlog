@@ -59,3 +59,5 @@ computed 计算完毕，释放Dep.target，并且Dep.target 恢复上一个watch
 ## 7. watch的原理
 
 watch用于监控用户的data变化，数据变化后会触发对应的watch的回调方法,vue当中的watch属性本质上其实调用的是vue暴露在实例上面的`$watch`方法，`$watch`内部就是创建一个`watcher`的过程，如果用户传进来的还有一些特殊的操作做一些特殊的处理（如`immediate`立刻执行回调函数），然后借助vue响应式原理，默认在取值时会将这个旧值保存下来，然后将watcher存放到对应属性的dep中，当数据发生变化时通知对应`的watcher`重新执行`getter`函数拿到用户返回的结果作为旧值，然后执行用户传进来的回调函数，将新旧值作为参数
+
+## 8. vue 和 react 里的key的作用是什么? 为什么不能用Index？用了会怎样? 如果不加key会怎样?
