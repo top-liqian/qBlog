@@ -104,3 +104,12 @@ css-loader是处理css当中的`@import`语法以及`url('./images/logo.png)`语
 ## 16. style-loader的作用
 
 把css变成一个JS脚本，脚本就是动态创建一个style标签，并且把这个style标签插入到HTML里的header
+
+## 17. 插件什么时候挂载
+
+插件的挂载或者说监听是在编译启动前全部挂载的
+
+## 18. webpack和babel之间的关系
+
+webpack在编译的时候，如果遇到js文件，会调用babel-loader进行文件内容的转换，在babel转换的时候会用babel插件来转换
+
