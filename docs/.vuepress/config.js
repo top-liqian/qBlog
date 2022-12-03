@@ -31,38 +31,62 @@ module.exports = {
     sidebar: {
       '/interview/': [
         {
-          title: '基础面试题',
+          title: 'ES5',
           collapable: true,
           children: [
-            { title: '基础面试题1',  path: '/interview/es5/基础/1-base.md' },
-            { title: '事件相关',  path: '/interview/es5/基础/2-base.md' },
+            {
+              title: '基础面试题',
+              collapable: true,
+              children: [
+                { title: '基础面试题1',  path: '/interview/es5/基础/1-base.md' },
+                { title: '事件相关',  path: '/interview/es5/基础/2-base.md' },
+              ]
+            },
+            {
+              title: '手写代码',
+              collapable: true,
+              children: [
+                { 
+                  title: '手写数组源码', 
+                  children: [
+                    { title: 'Array.isArray',  path: '/interview/es5/手写代码/数组/1.Array.isArray.md' },
+                    { title: 'Array.prototype.flat',  path: '/interview/es5/手写代码/数组/2.Array.prototype.flat.md' },
+                    { title: 'Array.prototype.reduce',  path: '/interview/es5/手写代码/数组/3.Array.prototype.reduce.md' }
+                  ]
+                }, 
+                { 
+                  title: '手写String源码', 
+                  children: [
+                    { title: 'String.prototype.trim',  path: '/interview/es5/手写代码/String/1.String.prototype.trim.md' }
+                  ]
+                }, 
+                { title: '实现call/apply/bind',  path: '/interview/es5/手写代码/1.call-apply-bind.md' },
+                { title: '深拷贝',  path: '/interview/es5/手写代码/2.deepclone.md' },
+                { title: '防抖/节流',  path: '/interview/es5/手写代码/3.throtle-debounce.md' },
+                { title: 'isEqual',  path: '/interview/es5/手写代码/4.isEqual.md' },
+                { title: 'lodash.get',  path: '/interview/es5/手写代码/5.lodash.get.md' }, 
+                { title: 'compose',  path: '/interview/es5/手写代码/6.compose.md' },
+                { title: 'shuffle',  path: '/interview/es5/手写代码/7.shuffle.md'},
+                { title: 'lodash.sample',  path: '/interview/es5/手写代码/8.lodash.sample.md' }, 
+                { title: 'lodash.sampleSize',  path: '/interview/es5/手写代码/9.lodash.sampleSize.md' },
+                { title: 'lodash.maxBy',  path: '/interview/es5/手写代码/10.lodash.maxBy.md'}
+              ]
+            },
           ]
         },
         {
-          title: '手写代码',
+          title: 'ES6',
           collapable: true,
           children: [
-            { 
-              title: '手写数组源码', 
-              children: [
-                { title: 'Array.isArray',  path: '/interview/es5/手写代码/数组/1.Array.isArray.md' },
-                { title: 'Array.prototype.flat',  path: '/interview/es5/手写代码/数组/2.Array.prototype.flat.md' },
-                { title: 'Array.prototype.reduce',  path: '/interview/es5/手写代码/数组/3.Array.prototype.reduce.md' }
+            {
+              title: '手写代码',
+              collapable: true,
+              children: [ 
+                { title: '实现let-const',  path: '/interview/es6/手写代码/1.let-const.md' },
               ]
-            }, 
-            { 
-              title: '手写String源码', 
-              children: [
-                { title: 'String.prototype.trim',  path: '/interview/es5/手写代码/String/1.String.prototype.trim.md' }
-              ]
-            }, 
-            { title: '实现call/apply/bind',  path: '/interview/es5/手写代码/1.call-apply-bind.md' },
-            { title: '深拷贝',  path: '/interview/es5/手写代码/2.deepclone.md' },
-            { title: '防抖/节流',  path: '/interview/es5/手写代码/3.throtle-debounce.md' },
-            { title: 'isEqual',  path: '/interview/es5/手写代码/4.isEqual.md' },
-            { title: 'lodash.get',  path: '/interview/es5/手写代码/5.lodash.get.md' },
+            }
           ]
-        },
+        }
       ],
       '/css/': [
         {

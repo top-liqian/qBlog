@@ -19,4 +19,15 @@
 * [深拷贝](./es5/手写代码/2.deepclone.md)
 * [防抖/节流](/interview/es5/手写代码/3.throtle-debounce.md)
 * [isEqual](/interview/es5/手写代码/4.isEqual.md)  
+* [compose](/interview/es5/手写代码/6.compose.md)
 * [lodash.get](/interview/es5/手写代码/5.lodash.get.md)
+* [lodash.shuffle](/interview/es5/手写代码/7.shuffle.md)
+* [lodash.sample](/interview/es5/手写代码/8.lodash.sample.md)
+* [lodash.sampleSize](/interview/es5/手写代码/9.lodash.sampleSize.md)
+* [lodash.maxBy](/interview/es5/手写代码/10.lodash.maxBy.md)
+
+# ES6
+
+## 手写代码
+
+* [let-const](./es6/手写代码/1.let-const.md)
