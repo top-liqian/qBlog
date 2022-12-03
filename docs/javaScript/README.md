@@ -20,6 +20,7 @@
 - [浏览器事件模型](./javaScript/internet/internet.md)
 
 - [箭头函数](./javaScript/arrow-function/arrow-function.md)
+- [深拷贝](./9.函数/7.深拷贝.md)
 - [数组原生方法](./javaScript/array-prototype-code/array-prototype-code.md)
 - [JSON.stringfy](./javaScript/json-stringify/json-stringify.md)
 

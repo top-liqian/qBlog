@@ -13,6 +13,7 @@ module.exports = {
   themeConfig: {
     logo: '/home.png',
     nav: [
+      { text: 'interview', link: '/interview/' },
       { text: 'Css', link: '/css/' },
       { text: 'JavaScript', link: '/javaScript/' },
       { text: '安装', link: '/install/' },
@@ -28,6 +29,41 @@ module.exports = {
     ],
     sidebarDepth: 2,
     sidebar: {
+      '/interview/': [
+        {
+          title: '基础面试题',
+          collapable: true,
+          children: [
+            { title: '基础面试题1',  path: '/interview/es5/基础/1-base.md' },
+            { title: '事件相关',  path: '/interview/es5/基础/2-base.md' },
+          ]
+        },
+        {
+          title: '手写代码',
+          collapable: true,
+          children: [
+            { 
+              title: '手写数组源码', 
+              children: [
+                { title: 'Array.isArray',  path: '/interview/es5/手写代码/数组/1.Array.isArray.md' },
+                { title: 'Array.prototype.flat',  path: '/interview/es5/手写代码/数组/2.Array.prototype.flat.md' },
+                { title: 'Array.prototype.reduce',  path: '/interview/es5/手写代码/数组/3.Array.prototype.reduce.md' }
+              ]
+            }, 
+            { 
+              title: '手写String源码', 
+              children: [
+                { title: 'String.prototype.trim',  path: '/interview/es5/手写代码/String/1.String.prototype.trim.md' }
+              ]
+            }, 
+            { title: '实现call/apply/bind',  path: '/interview/es5/手写代码/1.call-apply-bind.md' },
+            { title: '深拷贝',  path: '/interview/es5/手写代码/2.deepclone.md' },
+            { title: '防抖/节流',  path: '/interview/es5/手写代码/3.throtle-debounce.md' },
+            { title: 'isEqual',  path: '/interview/es5/手写代码/4.isEqual.md' },
+            { title: 'lodash.get',  path: '/interview/es5/手写代码/5.lodash.get.md' },
+          ]
+        },
+      ],
       '/css/': [
         {
           title: 'CSS',
@@ -58,6 +94,12 @@ module.exports = {
             { title: '继承', path: '/javaScript/6.继承/inherit' },
             { title: '闭包', path: '/javaScript/7.闭包/base' },
             { title: 'this', path: '/javaScript/8.this指向/base' },
+            { 
+              title: '函数', 
+              children: [
+                { title: '深拷贝', path: '/javaScript/9.函数/7.深拷贝.md' },
+              ] 
+            },
           ],
         },
         {
