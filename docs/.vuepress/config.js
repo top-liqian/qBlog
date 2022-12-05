@@ -38,8 +38,11 @@ module.exports = {
               title: '基础面试题',
               collapable: true,
               children: [
-                { title: '基础面试题1',  path: '/interview/es5/基础/1-base.md' },
-                { title: '事件相关',  path: '/interview/es5/基础/2-base.md' },
+                { title: '基础面试题',  path: '/interview/es5/基础/1-base.md' },
+                { title: '事件相关',  path: '/interview/es5/基础/2-事件.md' },
+                { title: 'new',  path: '/interview/es5/基础/3-new.md' },
+                { title: '闭包',  path: '/interview/es5/基础/4-闭包.md' },
+                { title: '数组相关的基础面试题',  path: '/interview/es5/基础/5-array.md' },
               ]
             },
             {
@@ -50,8 +53,25 @@ module.exports = {
                   title: '手写数组源码', 
                   children: [
                     { title: 'Array.isArray',  path: '/interview/es5/手写代码/数组/1.Array.isArray.md' },
+                    { title: 'Array.prototype.reduce',  path: '/interview/es5/手写代码/数组/3.Array.prototype.reduce.md' },
                     { title: 'Array.prototype.flat',  path: '/interview/es5/手写代码/数组/2.Array.prototype.flat.md' },
-                    { title: 'Array.prototype.reduce',  path: '/interview/es5/手写代码/数组/3.Array.prototype.reduce.md' }
+                    { title: 'Array.prototype.flatMap',  path: '/interview/es5/手写代码/数组/4.Array.prototype.flatMap.md' },
+                    { title: 'Array.prototype.find',  path: '/interview/es5/手写代码/数组/6.Array.prototype.find.md' },
+                    { title: 'Array.prototype.findIndex',  path: '/interview/es5/手写代码/数组/7.Array.prototype.findIndex.md' },
+                    { title: 'Array.prototype.includes',  path: '/interview/es5/手写代码/数组/8.Array.prototype.includes.md' },
+                    { title: 'Array.prototype.indexOf',  path: '/interview/es5/手写代码/数组/9.Array.prototype.indexOf.md' },
+                    { title: 'Array.prototype.lastIndexOf',  path: '/interview/es5/手写代码/数组/10.Array.prototype.lastIndexOf.md' },
+                    { title: 'Array.prototype.every',  path: '/interview/es5/手写代码/数组/11.Array.prototype.every.md' },
+                    { title: 'Array.prototype.filter',  path: '/interview/es5/手写代码/数组/12.Array.prototype.filter.md' },
+                    { title: 'Array.prototype.forEach',  path: '/interview/es5/手写代码/数组/13.Array.prototype.forEach.md' },
+                    { title: 'Array.prototype.map',  path: '/interview/es5/手写代码/数组/14.Array.prototype.map.md' },
+                    { title: 'Array.prototype.reduceRight',  path: '/interview/es5/手写代码/数组/15.Array.prototype.reduceRight.md' },
+                    { title: 'Array.prototype.some',  path: '/interview/es5/手写代码/数组/16.Array.prototype.some.md' },
+                    { title: 'Array.prototype.splice',  path: '/interview/es5/手写代码/数组/17.Array.prototype.splice.md' },
+                    { title: 'Array.prototype.pop',  path: '/interview/es5/手写代码/数组/18.Array.prototype.pop.md' },
+                    { title: 'Array.prototype.push',  path: '/interview/es5/手写代码/数组/19.Array.prototype.push.md' },
+                    { title: 'Array.prototype.unshift',  path: '/interview/es5/手写代码/数组/20.Array.prototype.unshift.md' },
+                    { title: 'Array.prototype.set',  path: '/interview/es5/手写代码/数组/21.Array.prototype.set.md' },
                   ]
                 }, 
                 { 
@@ -77,7 +97,14 @@ module.exports = {
         {
           title: 'ES6',
           collapable: true,
-          children: [
+          children: [ 
+            {
+              title: '基础面试题',
+              collapable: true,
+              children: [ 
+                { title: 'promise相关面试题',  path: '/interview/es6/2-promise.md' },
+              ]
+            },
             {
               title: '手写代码',
               collapable: true,
@@ -85,6 +112,32 @@ module.exports = {
                 { title: '实现let-const',  path: '/interview/es6/手写代码/1.let-const.md' },
               ]
             }
+          ]
+        },
+        {
+          title: '工程化',
+          collapable: true,
+          children: [ 
+            {
+              title: '基础面试题',
+              collapable: true,
+              children: [ 
+                { title: 'npm',  path: '/interview/工程化/base.md' },
+              ]
+            },
+          ]
+        },
+        {
+          title: '工程化',
+          collapable: true,
+          children: [ 
+            {
+              title: '基础面试题',
+              collapable: true,
+              children: [ 
+                { title: 'npm',  path: '/interview/工程化/base.md' },
+              ]
+            },
           ]
         }
       ],
