@@ -61,3 +61,28 @@ obj?.a?.[0];
 //使用方法
 obj?.b?.();
 ```
+
+## 7. 如何过滤数组中的 falsy value
+
+falsy value 包含：false, null, 0, "", undefined, NaN
+
+```js
+   array.filter(Boolean)
+```
+
+## 8. 如何判断一个数组是否包含某个值
+
+```js
+   Array.prototype.includes();
+```
+
+## 9. 如何判断某一个值是数组
+
+```js
+const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
+
+a instanceof Array
+
+arr.proto === Array.prototype
+
+```

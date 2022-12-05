@@ -155,11 +155,14 @@ server.listen(10010, () => console.log('Done'))
 </html>
 ```
 
+## 6. cookie具有那些字段？
 
-
-
-
-
++ path
++ domain
++ key
++ value
++ httpOnly
++ simeSite
 
 
 ## 301 302 304的区别

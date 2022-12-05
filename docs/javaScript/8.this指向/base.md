@@ -348,5 +348,29 @@ new 与 显示 不能相比较，报错
   ```
   答案： ```2 ```
 
+14. **题目14**
+
+```js
+"use strict";
+
+function test() {
+  console.log(this);
+}
+
+test.call(2);
+```
+2
+
+15. **题目15**
+
+```js
+function test() {
+  console.log(this);
+}
+
+test.call(2); // Number {2}
+```
+
+
 出处：
 [js中关于this绑定机制的解析](https://juejin.im/post/5b3715def265da59af40a630#comment)

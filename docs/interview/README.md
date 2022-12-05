@@ -1,9 +1,11 @@
 # ES5
 
-- [基础面试题1](./es5/基础/1-base.md)
+- [变量相关的面试题](./es5/基础/1-base.md)
 - [eventloop](./es5/基础/2-事件.md)
 - [new](./es5/基础/3-new.md)
 - [闭包](./es5/基础/4-闭包.md)
+- [数组](./es5/基础/5-array.md)
+- [基础面试题](./es5/基础/6-other.md)
 
 ## 手写代码
 
@@ -11,7 +13,7 @@
 
 * [Array.isArray](./es5/手写代码/数组/1.Array.isArray.md)
 * [Array.prototype.reduce](/interview/es5/手写代码/数组/3.Array.prototype.reduce.md)
-* * [Array.prototype.flat](/interview/es5/手写代码/数组/2.Array.prototype.flat.md)
+* [Array.prototype.flat](/interview/es5/手写代码/数组/2.Array.prototype.flat.md)
 * [Array.prototype.flatMap](./es5/手写代码/数组/4.Array.prototype.flatMap.md)
 
 ### 手写String类源码
@@ -34,7 +36,9 @@
 
 ## 基础面试题
 
+* [基础面试题](./es6/1-base.md)
 * [promise](./es6/2-promise.md)
+* [async/await](./es6/3-async-await.md)
 
 ## 手写代码
 

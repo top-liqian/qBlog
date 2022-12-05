@@ -295,6 +295,8 @@ Promise.all = function(values){
 
 ## 14. Promsie.allSettled
 
+接收一个可迭代对象，其中每个成员都是Promise。在所有给定的Promise都已经fulfilled或rejected后返回一个Promise，并带有一个对象数组，每个对象表示对应的Promise结果 相较于Promise.all，后者会在任何一个Promise为rejected时立即结束
+
 当多个promise同时请求的时候，无论成功与否都会将它的状态和结果以数组的形式返回给then函数
 
 ```js
