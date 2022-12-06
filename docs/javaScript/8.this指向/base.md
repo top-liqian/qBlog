@@ -371,6 +371,23 @@ function test() {
 test.call(2); // Number {2}
 ```
 
+16. **题目16**
+
+```js
+function foo() {
+  console.log(this.a);
+}
+
+var a = 2;
+
+(function () {
+  "use strict";
+
+  foo();
+})();
+```
+
+2，**只有在存在 this 的函数中设置严格模式**，this 为 undefined。因此此时会正常输出。
 
 出处：
 [js中关于this绑定机制的解析](https://juejin.im/post/5b3715def265da59af40a630#comment)

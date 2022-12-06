@@ -88,5 +88,176 @@ undefindedworld, 基本包装类型创建的实例上面定义的pro属性在定
 
 Not a Number，表示非数字，typeof NaN === 'number'
 
-## 14. JS 隐式转换，显示转换
+## 14. 列举 Number、String、Array、Object、Promise 有哪些 API
 
+### Number
++ Number.isNaN()
++ Number.isInteger()
++ Number.isInfinite()
++ Number.isSafeInteger()
++ Number.prototype.toFixed()
+  
+### String
++ String.fromCharCode()
++ String.raw()
++ String.prototype.charAt()
++ String.prototype.charCodeAt()
++ String.prototype.concat()
++ String.prototype.startsWith()
++ String.prototype.endsWith()
++ String.prototype.includes()
++ String.prototype.indexOf()
++ String.prototype.lastIndexOf()
++ String.prototype.charAt()
++ String.prototype.charCodeAt()
++ String.prototype.trim()
++ String.prototype.trimStart()
++ String.prototype.trimEnd()
++ String.prototype.repeat()
++ String.prototype.replace()
++ String.prototype.slice()
++ String.prototype.split()
++ String.prototype.sub+ String()
++ String.prototype.padStart()
++ String.prototype.padEnd()
++ String.prototype.search()
++ String.prototype.match()
++ String.prototype.toLowerCase()
++ String.prototype.toUpperCase()
+### Array
++ Array.isArray()
++ Array.from()
++ Array.of()
++ Array.prototype.slice()
++ Array.prototype.splice()
++ Array.prototype.sort()
++ Array.prototype.reverse()
++ Array.prototype.indexOf
++ Array.prototype.lastIndexOf()
++ Array.prototype.includes()
++ Array.prototype.push()
++ Array.prototype.pop()
++ Array.prototype.shift()
++ Array.prototype.unshift()
++ Array.prototype.map()
++ Array.prototype.reduce()
++ Array.prototype.forEach()
++ Array.prototype.filter()
++ Array.prototype.every()
++ Array.prototype.some()
++ Array.prototype.flat()
++ Array.prototype.flatMap()
++ Array.prototype.toString()
+### Object
++ Object.create()
++ Object.assign()
++ Object.defineProperties()
++ Object.defineProperty()
++ Object.keys()
++ Object.values()
++ Object.entries()
++ Object.fromEntries()
++ Object.is()
+
+## 15. Number.isNaN 与 globalThis.isNaN 有何区别
+
+```js
+Number.isNaN(NaN);
+isNaN(NaN);
+
+Number.isNaN("NaN");
+isNaN("NaN");
+```
+
+Number.isNaN('NaN') 是 false，其他都是 true
+
+## 16. 如何判断一个数值为整数
+
+```js
+// ES6
+Number.isInteger(num);
+
+// ES5
+if (!Number.isInteger) {
+  Number.isInteger = function (num) {
+    return typeof num == "number" && num % 1 == 0;
+  };
+}
+```
+
+## 17. 什么是安全整数，如何判断一个整数是安全整数
+
+一个安全整数是一个符合下面条件的整数：
+
+可以准确地表示为一个 IEEE-754 双精度数字,其 IEEE-754 表示不能是舍入任何其他整数以适应 IEEE-754 表示的结果。
+
+```js
+Number.MAX_SAFE_INTEGER 是最大安全整数，Number.isSafeInteger() 用来判断一个数值是否为安全整数。
+```
+
+## 18. 实现二进制与十进制的互相转化的两个函数
+
+```js
+function integerToBin(num) {
+  // 64
+  const result = [];
+  while (num / 2) {
+    next = num % 2;
+    num = Math.floor(num / 2);
+    result.unshift(next);
+  }
+  return result;
+}
+
+function fractionalToBin(num) {
+  const result = [];
+  let i = 0;
+  while (num !== 0 && i < 54) {
+    num = num * 2;
+
+    next = num >= 1 ? 1 : 0;
+    num = num % 1;
+    i++;
+    result.push(next);
+  }
+  return result;
+}
+
+function decToBinary(num) {
+  // 1.5
+  const [int, fraction] = String(num)
+    .split(/(?=\.)/)
+    .map((x, i) => {
+      return i === 0 ? integerToBin(x) : fractionalToBin(x);
+    });
+  return [int, fraction];
+}
+
+function binToDec(num) {
+  const [_int, _fraction] = String(num).split(".");
+  const int = _int.split("").reduceRight((acc, x, i) => {
+    return acc + x * 2 ** i;
+  }, 0);
+  const fraction = _fraction
+    ? _fraction.split("").reduce((acc, x, i) => {
+        return acc + x * 2 ** -(i + 1);
+      }, 0)
+    : 0;
+  return `${int}${fraction ? "." + fraction.toString().slice(2) : ""}`;
+}
+
+console.log(16, integerToBin(16), Number(16).toString(2));
+console.log(18, integerToBin(18), Number(18).toString(2));
+console.log(0.5, fractionalToBin(0.5), Number(0.5).toString(2));
+console.log(0.1, fractionalToBin(0.1), Number(0.1).toString(2));
+console.log(1.1, decToBinary(1.1), Number(1.1).toString(2));
+
+console.log(7.875, decToBinary(7.875), Number(7.875).toString(2));
+console.log("111.111", binToDec("111.111"), parseInt("111.111", 2));
+```
+
+## 19. 什么是原码、补码与反码
+
++ 原码:
++ 反码: 反码按位取反
++ 补码: 正数和 0 的补码就是该数字本身，负数的补码则是反码加一

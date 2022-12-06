@@ -86,3 +86,13 @@ a instanceof Array
 arr.proto === Array.prototype
 
 ```
+
+## 10. 如何把一个数组 Array 转化为迭代器 Iterable
+
+```js
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const it = list[Symbol.iterator]();
+
+it.next();
+```

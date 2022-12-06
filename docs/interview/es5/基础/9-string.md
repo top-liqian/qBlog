@@ -34,3 +34,27 @@ console.log(
   "hello world".IndexOf("wo", 12) + "/" + "hello world".indexOf("wo", 12)
 );
 ```
+
+## 2. 使用 JS 如何生成一个随机字符串
+
+```js
+const random = (n) =>
+  Math.random()
+    .toString(36)
+    .slice(2, 2 + n);
+
+random();
+// => "c1gdm2"
+random();
+// => "oir5pp"
+```
+
+## 3. 如何把字符串全部转化为小写格式
+
+```js
+// ES5
+const convert = (str) => str.replace(/[A-Z]/g, (l) => l.toLowerCase());
+
+// ES6
+String.prototype.toLowerCase()
+```

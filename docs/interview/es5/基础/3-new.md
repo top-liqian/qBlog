@@ -31,3 +31,19 @@
     return result instanceof Object ? result : obj
   }
 ```
+
+## 4. 关于 new，判断以下代码输出
+
+```js
+function F () {
+ this.a = 3;
+ return {
+   a: 4;
+ }
+}
+
+const f = new F();
+console.log(f.a);
+```
+
+输出 4 new 操作符，默认返回 this 对象。如果手动指定返回对象，则 new 出来的实例指向的是 return 的对象，而不是 this

@@ -411,3 +411,80 @@ function pMap(list, mapper, concurrency = Infinity) {
 }
 ```
    
+## 19.return promise 与 return await promise 有何区别
+
+return promise:
+
+返回结果为 Promise {fulfilled 或者 rejected}
+
+return await promise:
+
+返回结果为 Promise {pending}, 因为 async 函数总是返回一个 promise (resolved promise?
+
+## 20.输出下面的结果
+
+```js
+Promise.resolve()
+  .then(() => {
+    console.log(0);
+    return Promise.resolve(4);
+  })
+  .then((res) => {
+    console.log(res);
+  });
+
+Promise.resolve()
+  .then(() => {
+    console.log(1);
+  })
+  .then(() => {
+    console.log(2);
+  })
+  .then(() => {
+    console.log(3);
+  })
+  .then(() => {
+    console.log(5);
+  })
+  .then(() => {
+    console.log(6);
+  });
+```
+
+0 1 2 3 4 5 6
+
+为什么 return Promise 为什么产生了 2 次微任务?
+
+根据 promise/A+ ，结果应该为 0 1 2 4 3 5 6 ，也就是根据 Promise/A++ 标准只产生了 1 次微任务, 按照 PromiseA+的规范，此处应该是 2.3.2 标准：If x is a promise ,根据 A+准则的源码是以这么处理的：
+
+1. 遇到.then 就创建一 pending 状态的 Promise 保存起来。
+2. 如果是一个普通的 number 类型，则直接用 Promise.resolve(number)即可。 如果是 promise 类型的话，需要做一个状态同步操作，代码如下： 其中 x 是接收的已经 resolved 的 Promise，即(Promise.resolve(4))，而 this 指向我们刚创建的 pending 状态的 Promise
+
+也就是说，这 1 个 micro task 的作用就是同步状态。
+
+如果 resolve()的括号内的结果是一个 promise 的话，会多执行两个micro task
+
+至于还有一个微任务的产生原因是来自：v8 和 PromiseA+规范的差异。 v8 中的 Promie 实现是通过 C++编写的，与 promise/A+规范的不同之处在于，v8 并没有对x is a promise 的情况做处理，而是只有对x is an object的处理。所以多了一步 micro task：作用就是将 resolveWithPromise => resolveWithThenableObject
+
+## 21.输出下面的结果
+
+```JS
+new Promise((resolve) => {
+  let resolvedPromise = Promise.resolve();
+  resolve(resolvedPromise);
+}).then(() => {
+  console.log("resolvePromise resolved");
+});
+
+Promise.resolve()
+  .then(() => {
+    console.log("promise1");
+  })
+  .then(() => {
+    console.log("promise2");
+  })
+  .then(() => {
+    console.log("promise3");
+  });
+```
+promise1, promise2, resolvePromise resolved ,promise3
