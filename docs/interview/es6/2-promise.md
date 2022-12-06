@@ -488,3 +488,32 @@ Promise.resolve()
   });
 ```
 promise1, promise2, resolvePromise resolved ,promise3
+
+## 22. 实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject
+
+```js
+  Promise.retry = (promiseFn, time = 3) => {
+    return new Promise(async (resolve, reject) => {
+      while (time--) {
+        try {
+          console.log('------', time)
+          let result = await promiseFn()
+          console.log('result', result)
+          resolve(result)
+          break
+        } catch (err) {
+          console.log('########', time)
+          if (!time) reject('time 到了，但是仍然没有执行成功')
+        }
+      }
+    })
+  }
+
+  const promiseFn = () => {
+    return new Promise((resolve, reject) => {
+      reject()
+    })
+  }
+
+  Promise.retry(promiseFn)
+```
