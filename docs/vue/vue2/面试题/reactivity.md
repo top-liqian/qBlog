@@ -134,7 +134,7 @@ Vue 主要通过以下 4 个步骤来实现数据双向绑定的：
 + Proxy 可以直接监听数组的变化；
 + Proxy 有多达 13 种拦截方法,不限于 apply、ownKeys、deleteProperty、has 等等是 Object.defineProperty 不具备的；
 + Proxy 返回的是一个新对象,我们可以只操作新的对象达到目的,而 Object.defineProperty 只能遍历对象属性直接修改；
-+ Proxy 作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利；
++ Proxy 如果对象内部要全部递归代理，则Proxy可以只在调用时递归，而Object.defineProperty需要在一开始就全部递归，Proxy性能优于Object.defineProperty，作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利；
 
 2. Object.defineProperty 的优势如下:
 

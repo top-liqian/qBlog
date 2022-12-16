@@ -336,3 +336,15 @@ a = { '[object Object]': 'c' }  答案：'c'
 + 其他类型的都会被转换成字符串
 + 对象转字符串默认会调用toString方法
 
+
+## 18. 输出下面的值
+
+```js
+var a = { name: "Sam" };
+var b = { name: "Tom" };
+var o = {};
+o[a] = 1;
+o[b] = 2;
+console.log(o[a]);
+```
+2， 对象不能使用对象当作键值，所以会执行toString操作，o[a] 就相当于 o['[object Object]']，所以两次赋值都是相同的键值，所以返回2
