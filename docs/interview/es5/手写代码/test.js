@@ -30,7 +30,7 @@ function forEach(list, interatee) {
 }
 
 function getType(target) {
-    return ({}).prototype.toString.call(target)
+    return Object.prototype.toString.call(target)
 }
 
 function getInit(target) {
@@ -81,3 +81,18 @@ function deepClone(target, map = new WeakMap()) {
     })
     return targetClone
 }
+
+const target = {
+    field1: 1,
+    field2: undefined,
+    field3: 'ConardLi',
+    field4: {
+      child: 'child',
+      child2: {
+        child2: 'child2'
+      }
+    }
+  }
+
+const result = deepClone(target)
+console.log(result)
