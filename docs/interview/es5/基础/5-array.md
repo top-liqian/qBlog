@@ -76,17 +76,28 @@ falsy value 包含：false, null, 0, "", undefined, NaN
    Array.prototype.includes();
 ```
 
-## 9. 如何判断某一个值是数组
+## 9. 如何判断某一个值是数组?(共5种)
+
++ 通过Object.prototype.toString.call()做判断
+```js
+Object.prototype.toString.call(obj).slice(8,-1) === 'Array';
+```
++ 通过原型链做判断
 
 ```js
-const isArray = Array.isArray || list => ({}).toString.call(list) === '[object Array]'
-
+obj.__proto__ === Array.prototype;
+```
++ 通过ES6的Array.isArray()做判断
+```js
+Array.isArray(arr)
+```
++ 通过instanceof做判断
+```js
 a instanceof Array
-
-arr.proto === Array.prototype
-
+```
++ 通过Array.prototype.isPrototypeOf
+```js
 Array.prototype.isPrototypeOf(arr)
-
 ```
 
 ## 10. 如何把一个数组 Array 转化为迭代器 Iterable
