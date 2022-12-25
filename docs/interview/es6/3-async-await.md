@@ -1,5 +1,32 @@
 # async/await
 
+## 对async/await 的理解？
+
+async/await其实是Generator 的语法糖，它能实现的效果都能用then链来实现，它是为优化then链而开发出来的。async 用于申明一个 function 是异步的，而 await 用于等待一个异步方法执行完成。async 函数返回的是一个 Promise 对象，如果在函数中 return 一个直接量，async 会把这个直接量通过 Promise.resolve() 封装成 Promise 对象。在没有 await 的情况下执行 async 函数，它会立即执行，返回一个 Promise 对象，并且，绝不会阻塞后面的语句。这和普通返回 Promise 对象的函数并无二致。
+
+## await 到底在等啥？
+
+一般来说，都认为 await 是在等待一个 async 函数完成。不过按语法说明，await 等待的是一个表达式，这个表达式的计算结果是 Promise 对象或者其它值（换句话说，就是没有特殊限定）。
+
+因为 async 函数返回一个 Promise 对象，所以 await 可以用于等待一个 async 函数的返回值——这也可以说是 await 在等 async 函数，但要清楚，它等的实际是一个返回值。注意到 await 不仅仅用于等 Promise 对象，它可以等任意表达式的结果，所以，await 后面实际是可以接普通函数调用或者直接量的。
+
++ 如果它等到的不是一个 Promise 对象，那 await 表达式的运算结果就是它等到的东西。
++ 如果它等到的是一个 Promise 对象，await 就忙起来了，它会阻塞后面的代码，等着 Promise 对象 resolve，然后得到 resolve 的值，作为 await 表达式的运算结果。
+ 
+##  async/await的优势
+单一的 Promise 链并不能发现 async/await 的优势，但是，如果需要处理由多个 Promise 组成的 then 链的时候，优势就能体现出来了（很有意思，Promise 通过 then 链来解决多层回调的问题，现在又用 async/await 来进一步优化它）。
+
+## async/await对比Promise的优势
+
++ 代码读起来更加同步，Promise虽然摆脱了回调地狱，但是then的链式调⽤也会带来额外的阅读负担
++ Promise传递中间值⾮常麻烦，⽽async/await⼏乎是同步的写法，⾮常优雅
++ 错误处理友好，async/await可以⽤成熟的try/catch，Promise的错误捕获⾮常冗余
++ 调试友好，Promise的调试很差，由于没有代码块，你不能在⼀个返回表达式的箭头函数中设置断点，如果你在⼀个.then代码块中使⽤调试器的步进(step-over)功能，调试器并不会进⼊后续的.then代码块，因为调试器只能跟踪同步代码的每⼀步。
+
+## async/await 如何捕获异常
+
+使用try catch代码块
+
 ## 手写实现
 
 async的执行原理: 自动执行generator函数, 内部封装了一个promise

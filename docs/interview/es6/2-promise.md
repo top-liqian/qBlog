@@ -8,7 +8,19 @@
 
 ## 2. 什么是promise？
 
-Promise实际上是一个构造函数，并且是以一个函数作为参数，promise是具备状态的，promise主要有3种状态，pending、reject、fullfield，默认是pending的状态，promise的状态都是从pending状态转变成成功状态或者失败状态且不可逆，promise的执行器回掉函数（executor）是立即执行函数，接受两个函数作为参数，resolve函数代表成功状态的函数，reject函数代表失败状态函数且会有一个失败原因抛出，两个函数主要是对状态的改变的一个说明，并且通知订阅者状态发生了改变，由于两种方式会使promise走向失败状态，reject和 throw Error，所以executor是放在trycatch函数体当中执行
+Promise 对象是异步编程的一种解决方案，最早由社区提出。Promise 是一个构造函数，接收一个函数作为参数，返回一个 Promise 实例。一个 Promise 实例有三种状态，分别是pending、resolved 和 rejected，分别代表了进行中、已成功和已失败。实例的状态只能由 pending 转变 resolved 或者rejected 状态，并且状态一经改变，就凝固了，无法再被改变了。
+状态的改变是通过 resolve() 和 reject() 函数来实现的，可以在异步操作结束后调用这两个函数改变 Promise 实例的状态，它的原型上定义了一个 then 方法，使用这个 then 方法可以为两个状态的改变注册回调函数。这个回调函数属于微任务，会在本轮事件循环的末尾执行。
+
+## Promise的缺点：
+
+无法取消Promise，一旦新建它就会立即执行，无法中途取消。
+如果不设置回调函数，Promise内部抛出的错误，不会反应到外部。
+当处于pending状态时，无法得知目前进展到哪一个阶段（刚刚开始还是即将完成）。
+
+## Promise的特点：
+
++ 对象的状态不受外界影响。promise对象代表一个异步操作，有三种状态，pending（进行中）、fulfilled（已成功）、rejected（已失败）。只有异步操作的结果，可以决定当前是哪一种状态，任何其他操作都无法改变这个状态，这也是promise这个名字的由来——“承诺”；
++ 一旦状态改变就不会再变，任何时候都可以得到这个结果。promise对象的状态改变，只有两种可能：从pending变为fulfilled，从pending变为rejected。这时就称为resolved（已定型）。如果改变已经发生了，你再对promise对象添加回调函数，也会立即得到这个结果。这与事件（event）完全不同，事件的特点是：如果你错过了它，再去监听是得不到结果的。
 
 ## 3. 为什么promise的then方法要返回一个 promise的实例
 
