@@ -1,34 +1,53 @@
 # 指令相关的面试题
 
-## 一、v-show和v-if有什么区别？
+## v-show和v-if有什么区别？
 
-v-if是真正的条件渲染，因为他会确保在切换的过程中条件块内的事件监听和自组件适当的被销毁和重建；也是具有惰性的，如果初始的渲染条件为假的情况就什么都不做，直到条件第一次变成真的时候才会开始渲染条件块
+1. v-if是动态的向DOM树内添加或者删除DOM元素；v-show是通过设置DOM元素的display样式属性控制显隐；
+2. v-if切换有一个局部编译/卸载的过程，切换过程中合适地销毁和重建内部的事件监听和子组件；v-show只是简单的基于css切换；
++ v-if是惰性的，如果初始条件为假，则什么也不做；只有在条件第一次变为真时才开始局部编译; v-show是在任何条件下，无论首次条件是否为真，都被编译，然后被缓存，而且DOM元素保留；
++ v-if有更高的切换消耗；v-show有更高的初始渲染消耗；
++ v-if适合运营条件不大可能改变；v-show适合频繁切换。
 
-v-show：基于css的diaplay属性进行切换，不管初始条件是什么，元素都会渲染
+## v-model 是如何实现的，语法糖实际是什么？（v-model的原理是什么？）
 
-v-if适合很少改变条件，切换条件场景小的情况；v-show则是适用于频繁切换条件和场景
+1. 作用在表单元素上： 动态绑定了 input 的 value 指向了 messgae 变量，并且在触发 input 事件的时候去动态把 message设置为目标值，（$event.target指代当前触发的事件对象的dom）
+   + text 和 textarea 元素使用 value 属性和 input 事件
+   + checkbox 和 radio 使用 checked 属性和 change 事件；
+   + select 字段将 value 作为 prop 并将 change 作为事件。
+2. 作用在组件上：在自定义组件中，v-model 默认会利用名为 value 的 prop和名为 input 的事件
 
-## 二、v-model 的原理？
+`本质是一个父子组件通信的语法糖，通过prop和$.emit实现`。 因此父组件 v-model 语法糖本质上可以修改为：
 
-我们在 vue 项目中主要使用 v-model 指令在表单 input、textarea、select 等元素上创建双向数据绑定，我们知道 v-model 本质上不过是语法糖，v-model 在内部为不同的输入元素使用不同的属性并抛出不同的事件：
-
-1. text 和 textarea 元素使用 value 属性和 input 事件；
-   
-2. checkbox 和 radio 使用 checked 属性和 change 事件；
-   
-3. select 字段将 value 作为 prop 并将 change 作为事件。
-
-以input表单为例
-
-```js
-<input v-model='something'>
-    
-相当于
-
-<input v-bind:value="something" v-on:input="something = $event.target.value">
+```html
+<child :value="message"  @input="function(e){message = e}"></child>
 ```
 
-## 三、在vue中说说你知道的自定义指令
+默认情况下，一个组件上的v-model 会把 value 用作 prop且把 input 用作 event。但是一些输入类型比如单选框和复选框按钮可能想使用 value prop 来达到不同的目的。使用 model 选项可以回避这些情况产生的冲突。js 监听input 输入框输入数据改变，用oninput，数据改变以后就会立刻出发这个事件。通过input事件把数据$emit 出去，在父组件接受。父组件设置v-model的值为input $emit过来的值。
+
+## v-model 可以被用在自定义组件上吗？如果可以，如何使用？
+
+可以。v-model 实际上是一个语法糖
+
+```js
+<custom-input v-model="searchText"></custom-input>
+
+// 相当于：
+
+<custom-input v-bind:value="searchText" v-on:input="searchText = $event"></custom-input>
+```
+
+显然，custom-input 与父组件的交互如下：
+
++ 父组件将searchText变量传入custom-input 组件，使用的 prop 名为value；
++ custom-input 组件向父组件传出名为input的事件，父组件将接收到的值赋值给searchText；
+
+## v-if、v-show、v-html 的原理
+
++ v-if会调用addIfCondition方法，生成vnode的时候会忽略对应节点，render的时候就不会渲染；
++ v-show会生成vnode，render的时候也会渲染成真实节点，只是在render过程中会在节点的属性中修改show属性值，也就是常说的display；
++ v-html会先移除节点下的所有节点，调用html方法，通过addProp添加innerHTML属性，归根结底还是设置innerHTML为v-html的值。
+
+## 在vue中说说你知道的自定义指令
 
 自定义指令两种：
 1. 一种`全局自定义指令`，vue.js对象提供了`directive`方法，可以用来自定义指令，directive方法接收两个参数，一个是`指令名称`，另一个是`函数`；
@@ -41,7 +60,7 @@ v-if适合很少改变条件，切换条件场景小的情况；v-show则是适�
 4. componentUpdated：所在组件的 VNode 更新时调用,组件更新后的状态
 5. unbind：只调用一次，指令与元素解绑时调用。
 
-## 四、vue.js中常用的4种指令
+## vue.js中常用的4种指令
 
 + v-if判断对象是否隐藏；
 
@@ -61,7 +80,7 @@ v-if适合很少改变条件，切换条件场景小的情况；v-show则是适�
   
 + v-on 可以简写成@给元素绑定事件（常用修饰符.stop .prevent .self .once .passive）
 
-## 五、v-for和v-if连用的问题
+## v-for和v-if连用的问题
 
 v-for会比v-if的优先级高一些，如果连用的话会把v-if给每一个元素都添加一下，会造成性能问题（使用计算属性优化）
 
@@ -81,6 +100,9 @@ key 是为 Vue 中 vnode 的唯一标记，通过这个 key，我们的 diff 操
   
 + 更快速：利用 key 的唯一性生成 map 对象来获取对应节点，比遍历方式更快
 
+## vue事件绑定原理
+
+每一个vue实例都是一个`event bus`，当子组件被创建的时候，父组件将事件传递给子组件，子组件初始化的时候会有一个`$on`方法将事件注册到内部，在需要的时候使用`$emit`触发函数，而对于原生`native`事件，使用`addEventListener`绑定在真实的`dom`元素上面
 
 ## 七、实现一个v-lazy自定义插件
 
@@ -89,3 +111,33 @@ key 是为 Vue 中 vnode 的唯一标记，通过这个 key，我们的 diff 操
 v-on/@语法糖
 
 ## 九、vue有自己封装一些指令吗
+
+## slot是什么？有什么作用？原理是什么？
+
+slot插槽，是Vue的内容分发机制，组件内部的模板引擎使用slot元素作为承载分发内容的出口。插槽slot是子组件的一个模板标签元素，而这一个标签元素是否显示，以及怎么显示是由父组件决定的。slot又分三类，默认插槽，具名插槽和作用域插槽。
+
++ 默认插槽：当slot没有指定name属性值的时候一个默认显示插槽，一个组件内有且只有一个匿名插槽。
++ 具名插槽：带有name属性的slot，一个组件可以出现多个具名插槽。
++ 作用域插槽：在子组件渲染作用域插槽时，可以将子组件内部的数据传递给父组件，让父组件根据子组件的传递过来的数据决定如何渲染该插槽。
+
+实现原理：当子组件vm实例化时，获取到父组件传入的slot标签的内容，存放在vm.$slot中，默认插槽为vm.$slot.default，具名插槽为vm.$slot.xxx，xxx 为插槽名name，当组件执行渲染函数时候，遇到slot标签，使用$slot中的内容进行替换，此时可以为插槽传递数据，若存在数据，则可称该插槽为作用域插槽。
+
+
+## 过滤器的作用，如何实现一个过滤器
+
+根据过滤器的名称，过滤器是用来过滤数据的，在Vue中使用filters来过滤数据，filters不会修改数据，而是过滤数据，改变用户看到的输出（计算属性 computed ，方法 methods 都是通过修改数据来处理数据格式的输出显示）。
+
+使用场景：
+
++ 需要格式化数据的情况，比如需要处理时间、价格等数据格式的输出 / 显示。
++ 比如后端返回一个 年月日的日期字符串，前端需要展示为 多少天前 的数据格式，此时就可以用fliters过滤器来处理数据。
+
+过滤器是一个函数，它会把表达式中的值始终当作函数的第一个参数。过滤器用在插值表达式 {{ }} 和 v-bind 表达式 中，然后放在操作符“ | ”后面进行指示
+
+## 常见的事件修饰符及其作用
+
++ .stop：等同于 JavaScript 中的 event.stopPropagation() ，防止事件冒泡；
++ .prevent ：等同于 JavaScript 中的 event.preventDefault() ，防止执行预设的行为（如果事件可取消，则取消该事件，而不停止事件的进一步传播）；
++ .capture ：与事件冒泡的方向相反，事件捕获由外到内；
++ .self ：只会触发自己范围内的事件，不包含子元素；
++ .once ：只会触发一次。
