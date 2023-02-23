@@ -17,7 +17,7 @@
    
 2. action 可以进行一系列的异步操作，并且通过提交 mutation 来记录 action 产生的副作用（即状态变更）
 
-## 4. Vuex中 action 和 mutation 的区别
+## 4. action和mutation的区别
 
 1. mutations可以直接修改state，但只能包含同步操作，同时，只能通过提交commit调用(尽量通过Action或mapMutation调用而非直接在组件中通过this.$store.commit()提交)
 2. actions是用来触发mutations的，它无法直接改变state，它可以包含异步操作，它只能通过store.dispatch触发

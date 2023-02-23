@@ -31,6 +31,21 @@ module.exports = {
     sidebar: {
       '/interview/': [
         {
+          title: 'Vue',
+          collapable: true,
+          children: [
+            {
+              title: 'Vue2相关面试题',
+              collapable: true,
+              children: [
+                { title: '基础面试题',  path: '/interview/vue2/0.interview.md' },
+                { title: '响应式相关面试题',  path: '/interview/vue2/1.reactivity.md' },
+                { title: '渲染相关的面试题',  path: '/interview/vue2/2.render.md' } 
+              ]
+            }
+          ]
+        },
+        {
           title: 'ES5',
           collapable: true,
           children: [
@@ -38,12 +53,13 @@ module.exports = {
               title: '基础面试题',
               collapable: true,
               children: [
-                { title: '基础面试题',  path: '/interview/es5/基础/1-基本类型.md' },
-                { title: '事件相关',  path: '/interview/es5/基础/2-基础问题.md' },
-                { title: 'new',  path: '/interview/es5/基础/3-事件.md' },
-                { title: '闭包',  path: '/interview/es5/基础/4-闭包-作用域-执行上下文.md' },
-                { title: '数组相关的基础面试题',  path: '/interview/es5/基础/5-array.md' },
-                { title: '其他面试题',  path: '/interview/es5/基础/6-other.md' },
+                { title: '基本类型',  path: '/interview/es5/基础/1-基本类型.md' },
+                { title: '基础问题',  path: '/interview/es5/基础/2-基础问题.md' },
+                { title: '事件',  path: '/interview/es5/基础/3-事件.md' },
+                // { title: '闭包-作用域-执行上下文',  path: '/interview/es5/基础/4-闭包-作用域-执行上下文.md' },
+                // { title: '数组相关的基础面试题',  path: '/interview/es5/基础/5-array.md' },
+                // { title: '其他面试题',  path: '/interview/es5/基础/6-other.md' },
+                // { title: '垃圾回收',  path: '/interview/es5/基础/7-垃圾回收.md' },
               ]
             },
             {
