@@ -18,6 +18,7 @@ module.exports = {
       { text: 'JavaScript', link: '/javaScript/' },
       { text: '安装', link: '/install/' },
       { text: '前端工程化', link: '/工程化/' },
+      { text: '网络', link: '/internet/'},
       {
         text: 'Languages',
         items: [
@@ -233,6 +234,18 @@ module.exports = {
           collapable: true,
           children: [
             { title: 'pnpm简介', path: '/工程化/pnpm/pnpm.md' },
+          ],
+        },
+      ],
+      '/internet/': [
+        {
+          title: '浏览器相关',
+          collapable: true,
+          children: [
+            { title: '判断浏览器运行环境', path: '/internet/0.userAgent.md' },
+            { title: '输入url到页面渲染发生了啥', path: '/internet/1.输入url到页面渲染发生了啥.md'},
+            { title: '缓存', path: '/internet/2.cache.md'},
+            { title: 'get和post区别', path: '/internet/3.get-post.md'},
           ],
         },
       ]
