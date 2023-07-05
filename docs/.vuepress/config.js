@@ -58,9 +58,9 @@ module.exports = {
                 { title: '原型-new',  path: '/interview/es5/基础/2-原型-new.md' },
                 { title: '事件循环',  path: '/interview/es5/基础/3-事件.md' },
                 { title: '闭包-作用域-执行上下文',  path: '/interview/es5/基础/4-闭包-作用域-执行上下文.md' },
-                // { title: '数组相关的基础面试题',  path: '/interview/es5/基础/5-array.md' },
-                // { title: '其他面试题',  path: '/interview/es5/基础/6-other.md' },
-                // { title: '垃圾回收',  path: '/interview/es5/基础/7-垃圾回收.md' },
+                { title: '垃圾回收',  path: '/interview/es5/基础/5-垃圾回收.md' },
+                { title: '数组相关的面试题',  path: '/interview/es5/基础/6-array.md' },
+                { title: '对象相关的面试题',  path: '/interview/es5/基础/7-object.md' },
               ]
             },
             {

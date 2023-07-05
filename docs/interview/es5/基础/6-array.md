@@ -2,17 +2,15 @@
 
 ## 1. 列出对数组产生副作用和没有副作用的方法
    
-产生副作用的方法（改变了原来的数组）：```pop()、push() 、shift()、unshift()、reverse()、sort()、splice()、map()```
+产生副作用的方法8种：```pop()、push() 、shift()、unshift()、reverse()、sort()、splice()、map()```
 
-没有副作用的方法（原来数组不变）：```concat()、join()、slice()、toString()、toLocaleString()、valueOf()、reduce()、some()、every()、filter()、forEach()```
+没有副作用11种：```concat()、reduce()、some()、every()、filter()、forEach()、slice()、join()、toString()、toLocaleString()、valueOf()```
 
-## 2. 在 js 中如何把类数组转化为数组
+## 2. 常见的类数组
 
-类数组: 如果一个对象有 length 属性值, 则它就是类数组;
+document.getElementsByTagName、document.querySelectorAll、function 中的 arguments 也是类数组
 
-常见的类数组：document.getElementsByTagName、document.querySelectorAll、function 中的 arguments 也是类数组
-
-如何进行转换呢？
+## 3. 在 js 中如何把类数组转化为数组
 
 1. Array.prototype.slice.call(arrayLike);
 2. Array.prototype.splice.call(arrayLike, 0);
@@ -25,43 +23,41 @@
 + Array.prototype.map.call(arrayLike, (x) => x);
 + Array.prototype.filter.call(arrayLike, (x) => 1);
 
-## 3. 为什么函数的 arguments 参数是类数组而不是数组？如何遍历类数组?
+## 4. 为什么函数的arguments参数是类数组而不是数组？如何遍历类数组?
 
-arguments是一个对象，它的属性是从 0 开始依次递增的数字，还有callee和length等属性，与数组相似；但是它却没有数组常见的方法属性，如forEach, reduce等，所以叫它们类数组
+arguments是一个对象，它的属性是从0开始依次递增的数字，还有callee和length等属性，与数组相似；但是它却没有数组常见的方法属性，如forEach, reduce等，所以叫它们类数组
 
 1. Array.prototype.forEach.call(arguments, a => console.log(a))
 2. 使用Array.from方法将类数组转化成数组
 3. 使用展开运算符将类数组转化成数组
 
-## 4. JavaScript 类数组对象的定义？
+## 5. 类数组对象的定义？
 
 一个拥有 length 属性和若干索引属性的对象就可以被称为类数组对象，类数组对象和数组类似，但是不能调用数组的方法。常见的类数组对象有 arguments 和 DOM 方法的返回结果，还有一个函数也可以被看作是类数组对象，因为它含有 length 属性值，代表可接收的参数个数。
 
-## 5. 如何生成100个元素为1的数组呢？
+## 6. 如何生成100个元素为1的数组呢？
 
 1. Array.from(Array(100), x => 1)
 2. Array.apply(null, Array(100)).map(x => 1)
 3. Array(100).fill(1)
 
-## 6. 如何在 url 中传递数组
-
-在 URL 中如何传递数组这种复杂的数据，完全取决于项目中前后端成员关于复杂数据在 URL 中传输的约定，一般情况下可以使用以下方式来传递数组
+## 7. 如何在 url 中传递数组
 
 `a=3&a=4&a=5` 或者 `a[]=3&a[]=4&a[]=5` 或者 `a[0]=3&a[1]=4&a[2]=5`
 
-## 7. 什么是 TypedArray? ArrayBuffer，二进制数组
+## 8. 什么是 TypedArray? ArrayBuffer，二进制数组
 
-## 8. js 中什么是可选链操作符，如何访问数组
+## 9. js 中什么是可选链操作符，如何访问数组
 
 `?. 操作符`，可以嵌套获取对象的属性值。通过获取对象属性获得的值可能是 `undefined 或 null` 时，可选链操作符提供了一种方法来简化被连接对象的值访问，a?.[0]
 
-## 9. 如何过滤数组中的 falsy value
+## 10. 如何过滤数组中的 falsy value
 
 falsy value 包含：false, null, 0, "", undefined, NaN, 使用array.filter(Boolean)
 
-## 10. 如何判断一个数组是否包含某个值 - Array.prototype.includes()
+## 11. 如何判断一个数组是否包含某个值 - Array.prototype.includes()
 
-## 11. 如何判断某一个值是数组?(共5种)
+## 12. 如何判断某一个值是数组?(共5种)
 
 + 通过Object.prototype.toString.call()做判断 `Object.prototype.toString.call(obj).slice(8,-1) === 'Array';`
 + 通过原型链做判断 `obj.__proto__ === Array.prototype;`
@@ -69,33 +65,25 @@ falsy value 包含：false, null, 0, "", undefined, NaN, 使用array.filter(Bool
 + 通过instanceof做判断 `a instanceof Array`
 + 通过Array.prototype.isPrototypeOf
 
-## 12. 如何把一个数组 Array 转化为迭代器 Iterable
+## 13. 如何把一个数组 Array 转化为迭代器 Iterable
 
 list[Symbol.iterator]()
 
-## 13. 数组里面有10万个数据，取第一个元素和第10万个元素的时间相差多少?
+## 14. 数组里面有10万个数据，取第一个元素和第10万个元素的时间相差多少?
 
-几乎没有时间相差，数组是在计算机内存空间中分配一段连续的内存空间，并会记录下索引为`0`的内存地址。
+几乎没有时间相差，数组是在计算机内存空间中分配一段连续的内存空间，并会记录下索引为`0`的内存地址。当需要访问索引为`10万`的数据，计算机会进行计算，先找到索引为`0`的内存地址，在此基础上 `+ 10万` 即可以拿到索引为`10万`的数据。时间复杂度为常数级别： `O(1)`，这点计算时间对于内存来讲相当于没有，所以几乎没有时间相差
 
-当需要访问索引为`10万`的数据，计算机会进行计算，先找到索引为`0`的内存地址，在此基础上 `+ 10万` 即可以拿到索引为`10万`的数据
-
-时间复杂度为常数级别： `O(1)`，这点计算时间对于内存来讲相当于没有，所以几乎没有时间相差
-
-
-
-
-
-## Array.from() 和 Array.of() 的使用及区别？
+## 15. Array.from() 和 Array.of() 的使用及区别？
 
 + Array.from()：将伪数组对象或可遍历对象转换为真数组。接受三个参数：input、map、context。input：待转换的伪数组对象或可遍历对象；map：类似于数组的 map 方法，用来对每个元素进行处理，将处理后的值放入返回的数组；context：绑定map中用到的 this。
 + Array.of()：将一系列值转换成数组，会创建一个包含所有传入参数的数组，而不管参数的数量与类型，解决了new Array()行为不统一的问题。
 
-## forEach和map方法有什么区别
+## 16. forEach和map方法有什么区别
 
 + forEach()方法会针对每一个元素执行提供的函数，对数据的操作会改变原数组，该方法没有返回值；
 + map()方法不会改变原数组的值，返回一个新数组，新数组中的值为原数组调用函数处理之后的值；
 
-## 数组具有哪一些原生方法
+## 17. 数组具有哪一些原生方法
 
 1. 数组和字符串的转换方法：toString()、toLocalString()、join() 其中 join() 方法可以指定转换为字符串时的分隔符。
 2. 数组尾部操作的方法 pop() 和 push()，push 方法可以传入多个参数。
@@ -105,7 +93,7 @@ list[Symbol.iterator]()
 6. 数组插入方法 splice()，影响原数组查找特定项的索引的方法，indexOf() 和 lastIndexOf() 迭代方法 every()、some()、filter()、map() 和 forEach() 方法
 7. 数组归并方法 reduce() 和 reduceRight() 方法
 
-## 数组的遍历方法有哪些
+## 18. 数组的遍历方法有哪些
 
 | 方法 | 是否改变原数组 | 特点 | 
 | - | - | - | 
@@ -179,7 +167,7 @@ arguments参数是传递给函数的所有参数的集合(类数组结构)，也
 特点：arguments只存在于普通函数中，window全局下和箭头函数中都不存在
 
 
-## 14. 数组的神奇变化
+## 16. 数组的神奇变化
 
 ```js
 var arr1 = "john".split('');
@@ -197,7 +185,7 @@ array 2: length=5 last=[j,o,n,e,s]
 
 数组的`reverse`方法会影响原数组，普通的`arr2 = arr1`是浅复制，所以`arr1`和`arr2`的值是一样的
 
-## 15. ['1', '2', '3'].map(parseInt) what & why ?
+## 17. ['1', '2', '3'].map(parseInt) what & why ?
 
 ```js
 const arr = ['1', '2', '3'].map(parseInt)
