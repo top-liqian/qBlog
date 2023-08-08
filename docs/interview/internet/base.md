@@ -20,14 +20,44 @@ CSRF (Cross-site request forgery)，跨站请求伪造，也被称为 one-click 
    
 3. SameSite Cookie。设置为 Lax 或者 Strict，禁止发送第三方 Cookie。
 
-## 4. 什么是跨域？如何解决跨域
+## 4. 什么是跨域？如何解决跨域（跨越的解决方案）？
 
 `协议，域名，端口`，三者有一不一样，就是`跨域`
 
-前有两种最常见的解决方案：
+常见的解决方案如下：
 
-1. CORS，在服务器端设置几个响应头，如 Access-Control-Allow-Origin: *
-2. Reverse Proxy，在 nginx/traefik/haproxy 等反向代理服务器中设置为同一域名
+1. iframe方案
+
++ 优点：跨域完毕之后DOM操作和互相之间的JavaScript调用都是没有问题的
++ 缺点：如果结果要以URL参数传递在数据量很大的时候就需要分割传递；iframe父页面和iframe本身的交互有安全性限制
+
+2. 采用script标签的方案
+
++ 优点：可以直接返回json格式的数据，方便处理
++ 缺点：只接受GET请求方式
+
+3. 图片ping
+
++ 优点：可以访问任何url，一般用来进行点击追踪，做页面分析常用的方法
++ 缺点：不能访问响应文本，只能监听是否响应
+  
+4. CORS，在服务器端设置几个响应头，如 Access-Control-Allow-Origin: *
+
+```js
+location / {
+  if ($request_method = 'OPTIONS') {
+    add_header 'Access-Control-Allow-Origin' '*';  
+    add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS'; 
+    add_header 'Access-Control-Allow-Credentials' 'true';
+    add_header 'Access-Control-Allow-Headers' 'DNT, X-Mx-ReqToken, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type';  
+    add_header 'Access-Control-Max-Age' 86400;  
+    add_header 'Content-Type' 'text/plain charset=UTF-8';  
+    add_header 'Content-Length' 0;  
+    return 200;  
+  }
+}
+```
+5. Reverse Proxy，在 nginx/traefik/haproxy 等反向代理服务器中设置为同一域名
    
 ```nginx
     server {
@@ -46,7 +76,7 @@ CSRF (Cross-site request forgery)，跨站请求伪造，也被称为 one-click 
         }
     }
 ```
-3. 使用JSONP的方式
+6. 使用JSONP的方式
 
 ## 5. JSONP 的原理是什么，如何实现？
 
@@ -179,6 +209,10 @@ server.listen(10010, () => console.log('Done'))
 ## HTTP 3.0基于udp的话, 如何保证可靠的传输?
 
 ## TCP和UDP最大的区别是什么?
+
+UDP：无连接，不可靠传输，不使用流量控制和拥塞控制，支持一对一，一对多，多对一和多对多交互通信，采用面向报文的传输方式且首部开销小，仅8字节，适用于实时应用，例如视频会议、直播
+
+TCP：面向连接，可靠传输（数据顺序和正确性），使用流量控制和拥塞控制，只能是一对一通信，采用面向字节流的传输方式且首部最小20字节，最大60字节，适用于要求可靠传输的应用，例如文件传输
 
 ## CSP除了能防止加载外域脚本, 还能做什么?
 
