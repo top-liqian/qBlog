@@ -172,6 +172,7 @@ margin-bottom: 下侧元素上移，自身不受影响
 
 ### 1. 父子级z-index层级关系
 
+
 1. 当父元素设置了z-index,无论子元素设多小都会浮在父元素上面
 2. 父元素的z-index >= 兄弟组件的z-index， 子元素z-index比父元素同级组件高，会浮在所有元素上面
 3. 父元素的z-index < 兄弟组件的z-index, 子元素z-index无论多高都会在最下面
@@ -243,6 +244,32 @@ src 代表这个资源是必备的，必不可少的，最终会嵌⼊到⻚⾯�
 
 ## 十六、flex布局
 
+面试回答思路：首先得说出 Flex 布局概念，Flex 的结构组成（Flex Container 、Flex Item），其次可以讲讲自己平常用的最多的 Flex 属性，最后可以讲讲自己平时常用的布局（左右两列，上下两行等）
+
+flex：弹性布局，用来为盒状模型提供最大的灵活性，采用flex布局的元素叫做flex container，它所有的子元素自动成为容器元素叫做flex item，容器默认是存在两条轴，水平主轴（main axis）和垂直的交叉轴（cross axis），项目默认沿主轴排列
+
+最经常用的flex的容器属性就是：
+
++ flex-direction: 决定主轴的排列方向，row(水平)/column(垂直)/row-reverse/column-reverse
++ flex-wrap: flex item都在一根轴线上，也就是要不要换行， wrap/nowrap/wrap-reverse
++ flex-flow = flex-direction + flex-wrap，默认是 flex-grow: row nowrap;
++ justify-content: 主轴上的对齐方式 flex-start(左对齐)/flex-end(右对齐)/center(居中)/space-between(两端对齐)/space-around(每个项目两侧的间隔相等)
++ align-items: 交叉轴的对齐方式, flex-start | flex-end | center | baseline(第一行文字的基线对齐) | stretch(默认值)
++ align-content: 多根轴线的对齐方式,只有一根轴线，该属性不起作用
+  
+flex的项目属性：
++ order：项目的排列顺序，数值越小，排列越靠前，默认是0
++ flex-grow：项目的放大比例，默认为0，即如果存在剩余空间，也不放大
++ flex-shrink：项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。负值对该属性无效；为1的时候等比缩小
++ flex-basis：在分配多余空间之前，项目占据的主轴空间，也就是项目占据的固定空间
++ flex = flex-grow + flex-shrink + flex-basis = 0 1 auto；快捷值：auto (1 1 auto) 和 none (0 0 auto)。
+
+## 十七，flex：1 代表什么？
+
+代表 flex: 1 1 auto; 也就是根据容器空间等比放大/缩小，项目不具备固定的空间
+
 ## 十七、postion属性大概讲一下, static是什么表现? static在文档流里吗?
 
 ## 十八、css 三列等宽布局如何实现? flex 1是代表什么意思？分别有哪些属性?
+
+## 十九、
