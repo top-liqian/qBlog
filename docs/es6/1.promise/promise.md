@@ -75,6 +75,7 @@ promise的then函数的返回值：
 > 答： 在then方法当中继续包裹trycatch代码块
 > 5. `let promise2 = p.then(() => { then: function () {} })` 这是一个promise吗？
 > 答： 是，有then有函数就是promise
+> 
 
 ## 五、promise的测试方法
 

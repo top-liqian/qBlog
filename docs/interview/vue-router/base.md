@@ -1,5 +1,6 @@
 # vue-router相关的面试题
 
+
 ## 一、vue-router 路由模式有几种？
 
 vue-router 有 **3** 种路由模式：**hash、history、abstract**，对应的源码如下所示：
