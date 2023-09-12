@@ -17,9 +17,6 @@ switch (mode) {
 	this.history = new AbstractHistory(this, options.base)
 	break
   default:
-	if (process.env.NODE_ENV !== 'production') {
-	  assert(false, `invalid mode: ${mode}`)
-	}
 }
 ```
 
@@ -27,7 +24,7 @@ switch (mode) {
 
 + hash:  使用 URL hash 值来作路由。支持所有浏览器，包括不支持 HTML5 History Api 的浏览器；
 
-+ history :  依赖 HTML5 History API 和服务器配置。具体可以查看 HTML5 History 模式；
++ history :  依赖 HTML5 History API 和服务器配置
 
 + abstract :  支持所有 JavaScript 运行环境，如 Node.js 服务器端。如果发现没有浏览器的 API，路由会自动强制进入这个模式.
 
@@ -174,7 +171,11 @@ window.history.replaceState(null, null, path);
 const List = () => import('./index.vue')
 ```
 
-原理：
+原理：就是原本的Vue模块是全部导入在一起的打包文件，运行后用户查看相关模块显示的内容时会将整个打包的文件引入而后在其中查找对应的模块然后才将其呈现给用户。这样会使得在打包文件中查找对应模块时在浏览器中可能会出现短暂的空白页，从而降低用户体验。
+
+路由懒加载是将各个模块分开打包，在用户查看下相关模块内容时就直接引入相关模块的打包文件然后进行显示有效的解决了浏览器可能出现短暂时间空白页的情况。
+懒加载可以分割代码块，提高页面的初始加载效率解决白屏问题。 
+
 
 ## 九、编程式路由导航 与 声明式路由导航
 
