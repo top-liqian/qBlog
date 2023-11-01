@@ -145,35 +145,23 @@ Promise 的写法更为直观，并且能够在外层捕获异步函数的异常
                 try {
                     let x = resolveFn(value)
                     x instanceof Promise ? x.then(resolve, reject) : resolve(value)
-                } catch (err) {
-                   reject(err)
-                }
-               
+                } catch (err) { reject(err) }   
             }
-            
-
             const rejectedFn = value => {
                 try {
                     let x = rejectFn(value)
                     x instanceof Promise ? x.then(resolve, reject) : reject(value)
-                } catch (err) {
-                    reject(err)
-                }
+                } catch (err) { reject(err)}
             }
-
             switch(this._status) {
                 case PENDING: 
                     this._resolveQueue.push(fulfilledFn)
-                    this._resolveQueue.push(rejectedFn)
-                    break;
+                    this._resolveQueue.push(rejectedFn) 
                 case  FULFILLED:
-                    fulfilledFn(this._value)
-                    break;
+                    fulfilledFn(this._value) break;
                 case REJECTED:
-                    rejectedFn(this._value)
-                    break;
+                    rejectedFn(this._value) break;
             }
-           
         }
    }
 ```
@@ -276,29 +264,18 @@ catch方法在于执行回调去获取reject的结果，所以只需执行一下
 #### 手动实现promise.all
 
 业务场景中，我们经常会遇到不止一个promie的场景，因此需要合并一次执行多个promise，统一返回结果，Promise.all就是为了解决此问题。
-
 all方法不需要实例化类，即可直接通过该类来调用的方法，即称之为“静态方法”，所以在class中书写要加static关键字
-
 > 根据Promise A+规范，Promise.all可以同时执行多个Promise，并且在所有的Promise方法都返回完成之后才返回一个数组返回值。当有其中一个Promise reject的时候，则返回reject的结果。
 
 ```js
   class MyPomise {
-    ...
-
     static all (promises) {
       return new MyPromise((resolve, reject) => {
         let result = [] // 存放promise resolve时的返回值
-        /* 
-        * @param {MyPromise} promise 每一个promise方法
-        * @param {number} index 索引
-        * @param {string[]} result 收集返回结果的数组
-        */
         const deepPromise = (promise, index, result) => {
-          // 边界值限定：所有执行完之后返回收集数组
-          if (index > promises.length -1) {
+          if (index > promises.length -1) { // 边界值限定：所有执行完之后返回收集数组
             return result
           }
-      
           if (typeof promise.then === 'function') {
             promise.then((res) => {
               index++
@@ -314,9 +291,7 @@ all方法不需要实例化类，即可直接通过该类来调用的方法，�
           }
         }
       })
-
       deepPromise(promises[0], 0 , result)
-
       resolve(result)
     }
   }
